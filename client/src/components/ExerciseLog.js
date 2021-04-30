@@ -5,18 +5,22 @@ import "react-datepicker/dist/react-datepicker.css";
 import ExerciseForm from './ExerciseForm';
 
 
+const containerStyles = {
+    margin: '4em 0 4em 0'
+}
+
 const ExerciseLog = () => {
 
     const [startDate, setStartDate] = useState(new Date());
     const [modalStatus, setModalStatus] = useState(false);
-
+    console.log(startDate)
     const handleModal = () => {
         setModalStatus(!modalStatus)
     }
 
     return (
         <div>
-            <Container>
+            <Container style={containerStyles}>
                 <Input icon='search' placeholder='Search...' />
                 <Divider/>
                 <Header as="h2">Exercise Log</Header>

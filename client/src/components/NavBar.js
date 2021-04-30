@@ -10,9 +10,8 @@ const NavBar = () => {
     setActiveItem(name);
   }
 
-
     return (
-      <Segment inverted>
+      <Segment basic inverted style={{marginBottom: '0'}}>
         <Menu inverted pointing secondary>
           <Menu.Item
             as={Link}
