@@ -2,9 +2,10 @@ const Log = require('../models/log');
 
 exports.addExercise = (req,res) => {
     const newExercise = new Log({
-        name: req.query.name,
-        set: req.query.set,
-        reps: req.query.reps
+        name: req.body.name,
+        set: req.body.set,
+        reps: req.body.reps,
+        weight: req.body.weight
     })
     newExercise.save()
         .then(data => {

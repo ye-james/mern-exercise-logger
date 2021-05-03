@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getLog } from '../redux/actions/log'
 import { Container, Input, Divider, Header, Table, Button, Label } from 'semantic-ui-react';
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
@@ -13,7 +15,13 @@ const ExerciseLog = () => {
 
     const [startDate, setStartDate] = useState(new Date());
     const [modalStatus, setModalStatus] = useState(false);
-    console.log(startDate)
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getLog());
+    }, [dispatch]);
+
+
     const handleModal = () => {
         setModalStatus(!modalStatus)
     }
