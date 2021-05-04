@@ -17,10 +17,6 @@ const ExerciseLog = () => {
     const [modalStatus, setModalStatus] = useState(false);
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(getLog());
-    }, [dispatch]);
-
 
     const handleModal = () => {
         setModalStatus(!modalStatus)

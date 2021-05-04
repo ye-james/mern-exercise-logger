@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config(); 
 
@@ -9,7 +10,7 @@ const logRoutes = require('./routes/log');
 const app = express();
 const PORT = process.env.PORT || 8000;
 app.use(bodyParser.json());
-
+app.use(cors())
 app.use('/log', logRoutes);
 
 app.use('/', (req,res) => {

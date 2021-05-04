@@ -15,6 +15,10 @@ const logSchema = new mongoose.Schema({
         required: true
 
     }, 
+    weight: {
+        type: Number,
+        required: true     
+    },
     date: {
         type: Date,
         default: Date.now()

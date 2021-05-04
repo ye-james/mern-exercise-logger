@@ -7,6 +7,7 @@ exports.addExercise = (req,res) => {
         reps: req.body.reps,
         weight: req.body.weight
     })
+
     newExercise.save()
         .then(data => {
             res.status(200).json(result);
