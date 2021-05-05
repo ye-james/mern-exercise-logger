@@ -4,7 +4,7 @@ import { Modal, Header, Button, Form } from 'semantic-ui-react';
 import { addExercise, getLog } from '../redux/actions/log';
 
 const ExerciseForm = ({open, handleModal}) => {
-
+    
     const dispatch = useDispatch();
     const [exercise, setExercise] = useState('');
     const [set, setSet] = useState('');
@@ -12,16 +12,15 @@ const ExerciseForm = ({open, handleModal}) => {
     const [weight, setWeight] = useState('');
 
 
-    const handleFormSubmit = (e) => {
-
+    const handleFormSubmit = () => {
         const newExercise = {
             exercise,
             set,
             reps,
             weight
         }
-        const res = dispatch(addExercise(newExercise))
-        console.log(res);
+        dispatch(addExercise(newExercise))
+        handleModal();
     }
 
     return (

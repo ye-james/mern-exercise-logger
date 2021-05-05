@@ -1,9 +1,31 @@
-export default (state = [], action) => {
+export const INITIAL_STATE = {
+    logs: [],
+    successfullyAdded: false,
+    successfullyDeleted: false
+}
+
+export default (state = INITIAL_STATE, action) => {
     switch(action.type) {
-        case 'GET_LOG':
-            return [...state, action.payload]
+        case 'FETCH_LOG':
+            return {
+                ...state,
+                logs: action.payload
+            }
         case 'ADD_EXERCISE':
-            return [...state, action.payload]
+            console.log('Old state:', state.logs);
+            const newState = [...state.logs, action.payload];
+            console.log('New State: ', newState);
+            return {
+                ...state,
+                logs: [...state.logs,action.payload],
+                successfullyAdded: true
+            }
+        case 'DELETE_EXERCISE':
+            return {
+                ...state, 
+                logs: state.logs.filter(log => log._id !== action.payload),
+                successfullyDeleted: true
+            }
         default:
             return state;
     }

@@ -1,25 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { getLog } from '../redux/actions/log'
+import React, { useState, useEffect} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteExercise, getLog } from '../redux/actions/log'
 import { Container, Input, Divider, Header, Table, Button, Label } from 'semantic-ui-react';
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import ExerciseForm from './ExerciseForm';
+import logReducer from './../redux/reducers/logs';
+import { INITIAL_STATE } from './../redux/reducers/logs';
 
 
 const containerStyles = {
     margin: '4em 0 4em 0'
 }
 
-const ExerciseLog = () => {
+const ExerciseLog = () => {  
+    const dispatch = useDispatch();
+    const logs = useSelector(state => state.logs.logs);
 
     const [startDate, setStartDate] = useState(new Date());
     const [modalStatus, setModalStatus] = useState(false);
-    const dispatch = useDispatch();
+
+
+    useEffect(() => {
+        dispatch(getLog())
+    }, [dispatch])
 
 
     const handleModal = () => {
         setModalStatus(!modalStatus)
+    }
+
+    const handleExerciseDelete = id => {
+        dispatch(deleteExercise(id));
     }
 
     return (
@@ -39,38 +51,21 @@ const ExerciseLog = () => {
                         </Table.Row>
                     </Table.Header>
 
-                    <Table.Body>
-                        <Table.Row>
-                            <Table.Cell>Bench Press</Table.Cell>
-                            <Table.Cell>1</Table.Cell>
-                            <Table.Cell>10</Table.Cell>
-                            <Table.Cell>135 lb</Table.Cell>
-                            <Table.Cell width={2}>
-                                <Button size='mini' compact basic color="blue">Edit</Button>
-                                <Button size='mini' compact basic color="red">Delete</Button>
-                            </Table.Cell>
-
-                        </Table.Row>
-                        <Table.Row>
-                            <Table.Cell>Bench Press</Table.Cell>
-                            <Table.Cell>2</Table.Cell>
-                            <Table.Cell>10</Table.Cell>
-                            <Table.Cell>135 lb</Table.Cell>
-                            <Table.Cell width={2}>
-                                <Button size='mini' compact basic color="blue">Edit</Button>
-                                <Button size='mini' compact basic color="red">Delete</Button>
-                            </Table.Cell>
-                        </Table.Row>
-                        <Table.Row>
-                            <Table.Cell>Bench Press</Table.Cell>
-                            <Table.Cell>3</Table.Cell>
-                            <Table.Cell>10</Table.Cell>
-                            <Table.Cell>145 lb</Table.Cell>
-                            <Table.Cell width={2}>
-                                <Button size='mini' compact basic color="blue">Edit</Button>
-                                <Button size='mini' compact basic color="red">Delete</Button>
-                            </Table.Cell>
-                        </Table.Row>
+                    <Table.Body>               
+                        {logs.length !== 0 ? logs.map(exercise => {
+                            return (
+                                <Table.Row key={exercise._id}>
+                                    <Table.Cell>{exercise.name}</Table.Cell>
+                                    <Table.Cell>{exercise.set}</Table.Cell>
+                                    <Table.Cell>{exercise.reps}</Table.Cell>
+                                    <Table.Cell>{exercise.weight}</Table.Cell>
+                                    <Table.Cell width={2}>
+                                        <Button size='mini' compact basic color="blue">Edit</Button>
+                                        <Button size='mini' compact basic color="red" onClick={() => handleExerciseDelete(exercise._id)}>Delete</Button>
+                                    </Table.Cell>
+                                </Table.Row>
+                            )
+                        }) : <Table.Cell>No Logged Exercises</Table.Cell>}
                     </Table.Body>
 
                     <Table.Footer fullWidth>
