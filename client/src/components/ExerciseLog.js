@@ -5,8 +5,7 @@ import { Container, Input, Divider, Header, Table, Button, Label } from 'semanti
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import ExerciseForm from './ExerciseForm';
-import logReducer from './../redux/reducers/logs';
-import { INITIAL_STATE } from './../redux/reducers/logs';
+
 
 
 const containerStyles = {
