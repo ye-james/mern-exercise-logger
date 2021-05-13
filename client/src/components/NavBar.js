@@ -47,9 +47,10 @@ const NavBar = () => {
               <Input icon='search' placeholder='Search...' />
             </Menu.Item>
             <Menu.Item
-              name='logout'
-              active={activeItem === 'logout'}
-              onClick={handleItemClick}
+              name='login'
+              active={activeItem === 'login'}
+              as={Link}
+              to='/user/login'
             />
           </Menu.Menu>          
         </Menu>

@@ -11,20 +11,13 @@ export const addExercise = (newExercise) =>
         reps: newExercise.reps,
         weight: newExercise.weight
     })
-    /*.then(res => {
-        return res.data;
-    }).catch(err => {
-        console.log(err);
-    });*/
+
 
 export const deleteExercise = (id) =>
     axios.delete(url+'/log/delete-exercise' , { data: {
         _id: id
     }})
-    /*().then(res => {
-        console.log(res);
-    }).catch(err => {
-        console.log(err);
-    });*/
 
 export const getExercises = () => axios.get(url+'/exercises');
+
+export const signupUser = (user) => axios.post(url+'/user/signup', {user});

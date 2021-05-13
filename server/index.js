@@ -3,11 +3,17 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config(); 
 
-const logRoutes = require('./routes/log');
-const exerciseRoute = require('./routes/exercises')
-//Set up express
+
 const app = express();
 const PORT = process.env.PORT || 8000;
+const jwt = require('jsonwebtoken');
+
+
+const logRoutes = require('./routes/log');
+const exerciseRoute = require('./routes/exercises')
+const userRoute = require('./routes/user')
+//Set up express
+
 app.use(express.json());
 app.use(cors())
 
@@ -15,6 +21,7 @@ app.use(cors())
 
 app.use('/exercises', exerciseRoute);
 app.use('/log', logRoutes);
+app.use('/user', userRoute);
 app.use('/', (req,res) => {
     res.send('Hello from server');
 })
