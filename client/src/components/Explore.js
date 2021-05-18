@@ -10,9 +10,7 @@ const containerStyles={
 
 const Explore = () => {
     const dispatch = useDispatch();
-    const filterType = useState(null);
     const exercises = useSelector(state => state.exercises.exercises);
-
 
     useEffect(() => {
         dispatch(getExercises());

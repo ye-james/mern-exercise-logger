@@ -1,5 +1,7 @@
-import React  from 'react'
+import React, { useState } from 'react'
+import { useDispatch, useSelector} from 'react-redux';
 import { Container, Grid, Form, Button, Header } from 'semantic-ui-react'
+import { loginUser } from '../redux/actions/user';
 
 const containerStyles = {
     width: '20%',
@@ -8,7 +10,13 @@ const containerStyles = {
 }
 
 
-const Signup = () => {
+const Login = () => {
+    const [user, setUser] = useState(null);
+    const dispatch = useDispatch();
+
+    const handleUserLogin = () => {
+        dispatch(loginUser(user))
+    }
 
     return (
         <Container style={containerStyles}>
@@ -20,11 +28,10 @@ const Signup = () => {
                 </Grid.Row>
                 <Grid.Row>
                     <Grid.Column centered columns={16}>
-                        <Form>
-                            <Form.Input label="Username" />
-                            <Form.Input label="Password" type="password"/>
-                            <span>Not a member? </span><a href="/user/signup">Sign up here</a>  
-                                
+                        <Form onSubmit={handleUserLogin}>
+                        <Form.Input label="Username"  name='username' onChange={e => setUser( {...user, username: e.target.value}) }/>
+                            <Form.Input label="Password" type="password" onChange={e => setUser( {...user, password: e.target.value}) }/>
+                            <span>Not a member? </span><a href="/user/signup">Sign up here</a>     
                             <Form.Input type="submit" control={Button} content='Login'/>
                         </Form>
                     </Grid.Column>
@@ -34,4 +41,4 @@ const Signup = () => {
     )
 }
 
-export default Signup
+export default Login;

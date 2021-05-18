@@ -18,10 +18,9 @@ app.use(express.json());
 app.use(cors())
 
 
-
+app.use('/user', userRoute);
 app.use('/exercises', exerciseRoute);
 app.use('/log', logRoutes);
-app.use('/user', userRoute);
 app.use('/', (req,res) => {
     res.send('Hello from server');
 })
@@ -30,7 +29,8 @@ app.use('/', (req,res) => {
 
 const client = mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true
 }).then(res => {
     console.log('Successfully connected to MongoDB');
     app.listen(PORT, () => {
