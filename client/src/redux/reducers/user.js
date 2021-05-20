@@ -8,7 +8,7 @@ export default (state = INITIAL_STATE, action) => {
         case 'USER_SIGNUP':
             return state;
         case 'USER_LOGIN':
-            return {...state, user: action.payload}
+            return {...state, loggedIn: true, user: action.payload}
         default:
             return state;
     }

@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { Menu, Segment, Input } from 'semantic-ui-react';
 
 const NavBar = () => {
 
   const [activeItem, setActiveItem] = useState('home')
-
-  const handleItemClick = (e, { name }) => {
+  const loggedIn = useSelector(state => state.loggedIn);
+  console.log(loggedIn);
+  const user = useSelector(state => state.user);
+  const handleItemClick = ({ name }) => {
     setActiveItem(name);
   }
-
+ 
     return (
       <Segment basic inverted style={{marginBottom: '0'}}>
         <Menu inverted pointing secondary>
@@ -46,6 +49,7 @@ const NavBar = () => {
             <Menu.Item>
               <Input icon='search' placeholder='Search...' />
             </Menu.Item>
+            {loggedIn ? <Menu.Item name={`Welcome ${user.data.name}`}/> : null}
             <Menu.Item
               name='login'
               active={activeItem === 'login'}
