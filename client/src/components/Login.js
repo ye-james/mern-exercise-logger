@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector} from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { useDispatch} from 'react-redux';
 import { Container, Grid, Form, Button, Header } from 'semantic-ui-react'
 import { loginUser } from '../redux/actions/user';
 
@@ -13,9 +14,10 @@ const containerStyles = {
 const Login = () => {
     const [user, setUser] = useState(null);
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const handleUserLogin = () => {
-        dispatch(loginUser(user))
+        dispatch(loginUser(user, history))
     }
 
     return (

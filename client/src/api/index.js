@@ -1,12 +1,20 @@
 import axios from 'axios';
 import { ModalActions } from 'semantic-ui-react';
 
-const url = 'http://localhost:8000'
+const API = axios.create({baseURL: 'http://localhost:8000'});
 
-export const fetchLog = () => axios.get(url+'/log/all');
+//Create interceptor to include token with our requests
+API.interceptors.request.use((req) => {
+    if(localStorage.getItem('profile')) {
+        req.headers.authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`
+    }
+    return req;
+})
+
+export const fetchLog = () => API.get('/log/all');
 
 export const addExercise = (newExercise) => 
-    axios.post(url+'/log/add-exercise' ,{
+    API.post('/log/add-exercise' ,{
         name: newExercise.exercise,
         set: newExercise.set,
         reps: newExercise.reps,
@@ -15,13 +23,13 @@ export const addExercise = (newExercise) =>
 
 
 export const deleteExercise = (id) =>
-    axios.delete(url+'/log/delete-exercise' , { data: {
+    API.delete('/log/delete-exercise' , { data: {
         _id: id
     }})
 
-export const getExercises = () => axios.get(url+'/exercises');
+export const getExercises = () => API.get('/exercises');
 
-export const signupUser = (user) => axios.post(url+'/user/signup', {user});
+export const signupUser = (user) => API.post('/user/signup', {user});
 
-export const loginUser = user => axios.post(url+'/user/login', {user});
+export const loginUser = user => API.post('/user/login', {user});
 

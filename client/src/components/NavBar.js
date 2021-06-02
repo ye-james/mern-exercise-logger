@@ -1,18 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Menu, Segment, Input } from 'semantic-ui-react';
+import { Menu, Segment, Input, Button } from 'semantic-ui-react';
 
 const NavBar = () => {
-
+  const dispatch = useDispatch();
   const [activeItem, setActiveItem] = useState('home')
-  const loggedIn = useSelector(state => state.loggedIn);
-  console.log(loggedIn);
-  const user = useSelector(state => state.user);
+  const loggedIn = useSelector(state => state.user.isAuthenticated);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+
+  console.log(user);
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem('profile')));
+  }, [])
+
   const handleItemClick = ({ name }) => {
     setActiveItem(name);
   }
  
+  const handleLogout = () => {
+      //dispatch()
+  }
+
     return (
       <Segment basic inverted style={{marginBottom: '0'}}>
         <Menu inverted pointing secondary>
@@ -49,13 +59,18 @@ const NavBar = () => {
             <Menu.Item>
               <Input icon='search' placeholder='Search...' />
             </Menu.Item>
-            {loggedIn ? <Menu.Item name={`Welcome ${user.data.name}`}/> : null}
-            <Menu.Item
-              name='login'
-              active={activeItem === 'login'}
-              as={Link}
-              to='/user/login'
-            />
+            {loggedIn ? <Menu.Item name={`Welcome ${user.name.split(' ')[0]}`}/> : null}
+            {loggedIn ? <Menu.Item
+              name='logout'
+              active={activeItem === 'logout'}
+              as={Button}
+              onClick={handleLogout}
+            /> : <Menu.Item
+            name='login'
+            active={activeItem === 'login'}
+            as={Link}
+            to='/user/login'
+          /> }
           </Menu.Menu>          
         </Menu>
       </Segment>

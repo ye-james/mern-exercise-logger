@@ -10,10 +10,11 @@ export const signupUser = (user) => async (dispatch) => {
     }
 }
 
-export const loginUser = (user) => async (dispatch) => {
+export const loginUser = (user, history) => async (dispatch) => {
     try {
         const result = await api.loginUser(user);
-        dispatch({type: 'USER_LOGIN', payload: result.data})
+        dispatch({type: 'LOGIN_SUCCESS', payload: result.data.data})
+        history.push('/')
     } catch (err) {
         console.log(err)
     }
