@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Menu, Segment, Input, Button } from 'semantic-ui-react';
+import { logoutUser } from '../redux/actions/user';
 
 const NavBar = () => {
   const dispatch = useDispatch();
   const [activeItem, setActiveItem] = useState('home')
   const loggedIn = useSelector(state => state.user.isAuthenticated);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const history = useHistory();
+
 
   console.log(user);
   useEffect(() => {
@@ -20,7 +24,8 @@ const NavBar = () => {
   }
  
   const handleLogout = () => {
-      //dispatch()
+    console.log('log out')
+      dispatch(logoutUser(history));
   }
 
     return (

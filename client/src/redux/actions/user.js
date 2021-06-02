@@ -19,3 +19,8 @@ export const loginUser = (user, history) => async (dispatch) => {
         console.log(err)
     }
 }
+
+export const logoutUser = (history) => async (dispatch) => {
+    dispatch({type: 'LOGOUT_SUCCESS'})
+    history.push('/');
+}

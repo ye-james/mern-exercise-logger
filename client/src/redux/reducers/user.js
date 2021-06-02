@@ -6,32 +6,18 @@ const initalState = {
 
 export default (state = initalState, action) => {
     switch(action.type) {
-        case 'USER_LOADING':
-            return {
-                ...state,
-                isLoading: true
-            }
-        case 'USER_LOADED': 
-            return {
-                ...state,
-                isAuthenticated: true,
-                isLoading: false,
-                user: action.payload
-            }
         case 'LOGIN_SUCCESS': 
             localStorage.setItem('profile', JSON.stringify(action.payload))
             return {
                 ...state,
                 isAuthenticated: true,
-                isLoading: false,
                 user: JSON.parse(localStorage.getItem('profile'))
             } 
         case 'SIGNUP_SUCCESS': 
             return {
                 ...state,
                 ...action.payload,
-                isAuthenticated: true,
-                isLoading: false
+                isAuthenticated: true
             }
         case 'AUTH_ERROR':
             return;
@@ -44,14 +30,12 @@ export default (state = initalState, action) => {
                 user: null,
                 isAuthenticated: null
             }
-            return;
         case 'REGISTER_FAIL':
             return {
                 ...state,
                 token: null,
                 user: null,
-                isAuthenticated: false,
-                isLoading: false
+                isAuthenticated: false
             }
         default: 
             return state;
