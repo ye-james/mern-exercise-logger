@@ -1,10 +1,12 @@
 import React, { useState, useEffect} from 'react';
+import { Link, useRouteMatch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteExercise, getLog } from '../redux/actions/log'
 import { Container, Input, Divider, Header, Table, Button, Label } from 'semantic-ui-react';
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import ExerciseForm from './ExerciseForm';
+import { fetchCurrentExercise } from '../redux/actions/log'
 
 
 
@@ -14,8 +16,9 @@ const containerStyles = {
 
 const ExerciseLog = () => {  
     const dispatch = useDispatch();
-    const logs = useSelector(state => state.logs.logs);
+    let { path, url } = useRouteMatch();
 
+    const logs = useSelector(state => state.logs.logs);
     const [startDate, setStartDate] = useState(new Date());
     const [modalStatus, setModalStatus] = useState(false);
 
@@ -31,6 +34,10 @@ const ExerciseLog = () => {
 
     const handleExerciseDelete = id => {
         dispatch(deleteExercise(id));
+    }
+    
+    const editExercise = id => {
+        dispatch(fetchCurrentExercise(id));
     }
 
     return (
@@ -59,7 +66,7 @@ const ExerciseLog = () => {
                                     <Table.Cell>{exercise.reps}</Table.Cell>
                                     <Table.Cell>{exercise.weight}</Table.Cell>
                                     <Table.Cell width={2}>
-                                        <Button size='mini' compact basic color="blue">Edit</Button>
+                                    <Link size='mini' basic color="blue" component={Button} to={`/log/edit/${exercise._id}`} onClick={() => editExercise(exercise._id)}>Edit</Link>
                                         <Button size='mini' compact basic color="red" onClick={() => handleExerciseDelete(exercise._id)}>Delete</Button>
                                     </Table.Cell>
                                 </Table.Row>
@@ -70,7 +77,7 @@ const ExerciseLog = () => {
                     <Table.Footer fullWidth>
                         <Table.Row>
                             <Table.HeaderCell colSpan='12'>
-                            <Button size='small' basic color="blue" onClick={handleModal}>Add Exercise</Button>
+                            <Link size='small' basic color="blue" component={Button} to={`${url}/add`}>Add Exercise</Link>
                             </Table.HeaderCell>
                         </Table.Row>
                     </Table.Footer>

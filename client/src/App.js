@@ -9,6 +9,7 @@ import Explore from './components/Explore';
 import Footer from './components/Footer'
 import Login from './components/Login';
 import Signup from './components/Signup.js';
+import ExerciseForm from './components/ExerciseForm';
 
 
 const containerStyles = { 
@@ -19,20 +20,20 @@ const containerStyles = {
 const App = () => {
     return (
         <>
-        <BrowserRouter>
-            <NavBar/>
-            <Container style={containerStyles}>
+        <NavBar/>
+        <Container style={containerStyles}>
 
-                <Switch>
-                    <Route path='/' component={Home} exact/>
-                    <Route path='/log' component={ExerciseLog}/>
-                    <Route path='/explore' component={Explore}/>
-                    <Route path='/user/login' component={Login}/>
-                    <Route path='/user/signup' component={Signup}/>
-                </Switch>
-            </Container>
-            <Footer/>
-        </BrowserRouter>
+            <Switch>
+                <Route path='/' component={Home} exact/>
+                <Route path='/log' component={ExerciseLog} exact />
+                <Route path={'/log/edit/:exerciseId'} component={ExerciseForm}/>
+                <Route path={'/log/add'} component={ExerciseForm}/>
+                <Route path='/explore' component={Explore}/>
+                <Route path='/user/login' component={Login}/>
+                <Route path='/user/signup' component={Signup}/>
+            </Switch>
+        </Container>
+        <Footer/>
         </>
     )
 }

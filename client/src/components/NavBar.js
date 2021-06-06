@@ -13,8 +13,7 @@ const NavBar = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const history = useHistory();
 
-
-  console.log(user);
+  //console.log(user);
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('profile')));
   }, [])
@@ -24,7 +23,6 @@ const NavBar = () => {
   }
  
   const handleLogout = () => {
-    console.log('log out')
       dispatch(logoutUser(history));
   }
 

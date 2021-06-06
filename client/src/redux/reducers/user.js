@@ -1,5 +1,4 @@
 const initalState = {
-    token: localStorage.getItem('token'),
     user: null,
     isAuthenticated: null}
 
@@ -26,14 +25,12 @@ export default (state = initalState, action) => {
         case 'LOGOUT_SUCCESS':
             localStorage.clear();
             return { ...state,
-                token: null,
                 user: null,
                 isAuthenticated: null
             }
         case 'REGISTER_FAIL':
             return {
                 ...state,
-                token: null,
                 user: null,
                 isAuthenticated: false
             }

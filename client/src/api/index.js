@@ -21,11 +21,24 @@ export const addExercise = (newExercise) =>
         weight: newExercise.weight
     })
 
+export const updateExercise = (newExercise, id) => 
+API.post(`/log/update-exercise`,{
+    id: id,
+    name: newExercise.exercise,
+    set: newExercise.set,
+    reps: newExercise.reps,
+    weight: newExercise.weight
+})
+
 
 export const deleteExercise = (id) =>
     API.delete('/log/delete-exercise' , { data: {
         _id: id
     }})
+
+
+export const fetchCurrentExercise = id => API.get(`/log/edit/${id}`);
+
 
 export const getExercises = () => API.get('/exercises');
 

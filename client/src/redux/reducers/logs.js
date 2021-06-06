@@ -1,5 +1,6 @@
 export const INITIAL_STATE = {
     logs: [],
+    editExercise: null,
     successfullyAdded: false,
     successfullyDeleted: false
 }
@@ -19,6 +20,11 @@ export default (state = INITIAL_STATE, action) => {
                 ...state,
                 logs: [...state.logs,action.payload],
                 successfullyAdded: true
+            }
+        case 'FETCH_SINGLE_EXERCISE':
+            console.log(action.payload);
+            return {...state,
+                editExercise: action.payload
             }
         case 'DELETE_EXERCISE':
             return {

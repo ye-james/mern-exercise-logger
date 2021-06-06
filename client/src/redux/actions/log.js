@@ -24,6 +24,26 @@ export const addExercise = (exercise) => async(dispatch) => {
     }
 }
 
+export const updateExercise = (exercise, id) => async(dispatch) => {
+    try{
+        const result = await api.updateExercise(exercise, id);
+        dispatch({type: 'UPDATE_EXERCISE', payload: result.data})
+    }
+    catch (err) {
+        console.log(err.message)
+    }
+}
+
+export const fetchCurrentExercise = id => async(dispatch) => {
+    try {
+        const result = await api.fetchCurrentExercise(id);
+        dispatch({type: 'FETCH_SINGLE_EXERCISE', payload: result.data})
+    }
+    catch (err) {
+        console.log(err.message);
+    }
+}
+
 export const deleteExercise = id => async(dispatch) => {
     try {
         const result = await api.deleteExercise(id);
