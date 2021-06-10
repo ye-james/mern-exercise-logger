@@ -25,7 +25,7 @@ const ExerciseLog = () => {
 
     useEffect(() => {
         dispatch(getLog())
-    }, [dispatch])
+    }, [])
 
 
     const handleModal = () => {

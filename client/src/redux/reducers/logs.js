@@ -8,6 +8,8 @@ export const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
     switch(action.type) {
         case 'FETCH_LOG':
+            console.log('dispatched ')
+            console.log(action.payload)
             return {
                 ...state,
                 logs: action.payload

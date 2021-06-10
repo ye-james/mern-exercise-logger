@@ -23,6 +23,7 @@ const NavBar = () => {
   }
  
   const handleLogout = () => {
+      setUser(false);
       dispatch(logoutUser(history));
   }
 
@@ -44,13 +45,13 @@ const NavBar = () => {
             active={activeItem === 'explore'}
             onClick={handleItemClick}
           />
-          <Menu.Item
+          {user? <Menu.Item
             as={Link}
-            to='log'
+            to={`log/${user.id}`}
             name='log'
             active={activeItem === 'log'}
             onClick={handleItemClick}
-          />
+          /> : null}
           <Menu.Item
             name='progress'
             as={Link}
@@ -62,7 +63,7 @@ const NavBar = () => {
             <Menu.Item>
               <Input icon='search' placeholder='Search...' />
             </Menu.Item>
-            {loggedIn ? <Menu.Item name={`Welcome ${user.name.split(' ')[0]}`}/> : null}
+            {loggedIn && <Menu.Item name={`Welcome ${user.name.split(' ')[0]}`}/>}
             {loggedIn ? <Menu.Item
               name='logout'
               active={activeItem === 'logout'}

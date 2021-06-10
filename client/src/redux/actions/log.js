@@ -2,12 +2,9 @@ import * as api from '../../api';
 //Action creators
 
 export const getLog = () => async (dispatch) => {
-
     try {
         const result = await api.fetchLog();
-        console.log(result);
-        dispatch({type: 'FETCH_LOG', payload: result.data});
-
+        dispatch({type: 'FETCH_LOG', payload: result.data})
     } catch (error) {
         console.log(error.message);
     }

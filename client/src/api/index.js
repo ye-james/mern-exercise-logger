@@ -11,10 +11,11 @@ API.interceptors.request.use((req) => {
     return req;
 })
 
-export const fetchLog = () => API.get('/log/all');
+export const fetchLog = () => API.get(`/log/${JSON.parse(localStorage.getItem('profile')).id}`);
 
 export const addExercise = (newExercise) => 
     API.post('/log/add-exercise' ,{
+        userId: JSON.parse(localStorage.getItem('profile')).id,
         name: newExercise.exercise,
         set: newExercise.set,
         reps: newExercise.reps,
@@ -22,13 +23,13 @@ export const addExercise = (newExercise) =>
     })
 
 export const updateExercise = (newExercise, id) => 
-API.post(`/log/update-exercise`,{
-    id: id,
-    name: newExercise.exercise,
-    set: newExercise.set,
-    reps: newExercise.reps,
-    weight: newExercise.weight
-})
+    API.post(`/log/update-exercise`,{
+        id: id,
+        name: newExercise.exercise,
+        set: newExercise.set,
+        reps: newExercise.reps,
+        weight: newExercise.weight
+    })
 
 
 export const deleteExercise = (id) =>

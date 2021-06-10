@@ -25,7 +25,7 @@ const App = () => {
 
             <Switch>
                 <Route path='/' component={Home} exact/>
-                <Route path='/log' component={ExerciseLog} exact />
+                <Route path='/log/:userId' component={ExerciseLog} exact />
                 <Route path={'/log/edit/:exerciseId'} component={ExerciseForm}/>
                 <Route path={'/log/add'} component={ExerciseForm}/>
                 <Route path='/explore' component={Explore}/>

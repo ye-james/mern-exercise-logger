@@ -14,7 +14,11 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    logs: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Log'
+    }]
 })
 
 module.exports = mongoose.model('user', userSchema);
