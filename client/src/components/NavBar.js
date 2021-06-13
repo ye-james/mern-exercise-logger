@@ -16,7 +16,7 @@ const NavBar = () => {
   //console.log(user);
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('profile')));
-  }, [])
+  })
 
   const handleItemClick = ({ name }) => {
     setActiveItem(name);
