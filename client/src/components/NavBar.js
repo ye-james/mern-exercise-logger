@@ -63,7 +63,7 @@ const NavBar = () => {
             <Menu.Item>
               <Input icon='search' placeholder='Search...' />
             </Menu.Item>
-            {loggedIn && <Menu.Item name={`Welcome ${user.name.split(' ')[0]}`}/>}
+            {loggedIn  && user && <Menu.Item name={`Welcome ${user.name.split(' ')[0]}`}/>}
             {loggedIn ? <Menu.Item
               name='logout'
               active={activeItem === 'logout'}
