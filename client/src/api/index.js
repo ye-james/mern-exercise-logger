@@ -11,7 +11,7 @@ API.interceptors.request.use((req) => {
     return req;
 })
 
-export const fetchLog = () => API.get(`/log/${JSON.parse(localStorage.getItem('profile')).id}`);
+export const fetchLog = () => API.get(`/log/${JSON.parse(localStorage.getItem('profile')).userId}`);
 
 export const addExercise = (newExercise) => 
     API.post('/log/add-exercise' ,{

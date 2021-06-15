@@ -10,7 +10,7 @@ export default (state = initalState, action) => {
             return {
                 ...state,
                 isAuthenticated: true,
-                user: JSON.parse(localStorage.getItem('profile'))
+                user: action.payload
             } 
         case 'SIGNUP_SUCCESS': 
             return {

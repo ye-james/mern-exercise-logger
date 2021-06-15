@@ -10,20 +10,20 @@ const NavBar = () => {
   const dispatch = useDispatch();
   const [activeItem, setActiveItem] = useState('home');
   const loggedIn = useSelector(state => state.user.isAuthenticated);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const user = useSelector(state => state.user.user);
+  //const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const history = useHistory();
 
   //console.log(user);
-  useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem('profile')));
-  });
+  // useEffect(() => {
+  //   setUser(JSON.parse(localStorage.getItem('profile')));
+  // });
 
   const handleItemClick = ({ name }) => {
     setActiveItem(name);
   };
 
   const handleLogout = () => {
-    setUser(false);
     dispatch(logoutUser(history));
   };
 
