@@ -48,12 +48,12 @@ exports.loginUser = async (req, res) => {
     }
 
     // create json web token
-    const token = jwt.sign({email: userExist.email, id: userExist._id}, process.env.TOKEN_SECRET, {expiresIn: '1hr'});
+    const token = jwt.sign({email: user.email, id: user._id}, process.env.TOKEN_SECRET, {expiresIn: '1hr'});
     res.status(200).json({
         message: 'Successfully logged in!',
         data: {
-            id: userExist._id, 
-            name: userExist.name,
+            id: user._id, 
+            name: user.name,
             token: token}
     })
   } catch (err) {
