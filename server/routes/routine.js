@@ -10,7 +10,8 @@ const auth = require('../middleware/auth');
 * return: routine
 * access: private
 */ 
-router.get('/')
+router.get('/', routineController.getAllRoutines)
+
 
 /*
 * route: GET /routine/:routine_id
@@ -34,7 +35,7 @@ router.post('/:userID', routineController.addRoutine);
 * return: routine
 * access: private
 */ 
-router.post('/exercise/:routineID')
+router.patch('/exercise/:routineID', routineController.addExerciseToRoutine)
 
 /*
 * route: DELETE /routine/:routine_id

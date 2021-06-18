@@ -14,7 +14,6 @@ const routineSchema = new mongoose.Schema({
              type: String,
              required: true
            },
-           _id: false,
            set: [{
                reps: {
                    type: Number
@@ -25,7 +24,10 @@ const routineSchema = new mongoose.Schema({
                _id: false
            }]
          }],
-         //ref: user
+         user: {
+          type: mongoose.Types.ObjectId,
+          default: mongoose.Types.ObjectId('60b7139612e3b86128e78b36')
+         }
 })
 
 module.exports = mongoose.model('Routine', routineSchema)
