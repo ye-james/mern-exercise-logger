@@ -45,5 +45,15 @@ export const getExercises = () => API.get('/exercises');
 
 export const signupUser = (user) => API.post('/user/signup', {user});
 
-export const loginUser = user => API.post('/user/login', {user});
+export const loginUser = async (user) => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+    const {username, password } = user;
+    const body = JSON.stringify({username, password});
 
+    const res = await API.post('/user/login', body, config);
+    return res;
+}
