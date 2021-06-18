@@ -4,6 +4,7 @@ require('dotenv').config();
 const connectToDB = require('./config/db');
 const logRoutes = require('./routes/log');
 const exerciseRoute = require('./routes/exercises')
+const routineRoute = require('./routes/routine')
 const userRoute = require('./routes/user')
 const jwt = require('jsonwebtoken');
 
@@ -19,6 +20,7 @@ app.use(cors())
 // Routes
 app.use('/user', userRoute);
 app.use('/exercises', exerciseRoute);
+app.use('/routine', routineRoute)
 app.use('/log', logRoutes);
 
 

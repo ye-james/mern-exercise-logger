@@ -48,7 +48,7 @@ const ExerciseForm = ({open, handleModal}) => {
             dispatch(addExercise(newExercise))
 
         }
-        history.push('/log')
+        history.push(`/log/${JSON.parse(localStorage.getItem('profile')).userId}`)
     }
 
     const closeModal = () => {
