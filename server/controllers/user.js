@@ -53,5 +53,5 @@ exports.signupUser = async(req, res)=> {
 
 
 function generateAccessToken(username) {
-    return jwt.sign(username, process.env.TOKEN_SECRET, {expiresIn: '3600s'})
+    return jwt.sign(username, process.env.TOKEN_SECRET, {expiresIn: '1hr'})
 }
