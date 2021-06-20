@@ -3,6 +3,15 @@ import { ModalActions } from 'semantic-ui-react';
 
 const API = axios.create({baseURL: 'http://localhost:8000'});
 
+const config = {
+    headers: {
+        'Content-Type': 'application/json'
+    }
+};
+
+
+
+
 //Create interceptor to include token with our requests if user is logged in
 API.interceptors.request.use((req) => {
     if(localStorage.getItem('profile')) {
@@ -33,9 +42,9 @@ export const updateExercise = (newExercise, id) =>
 
 
 export const deleteExercise = (id) =>
-    API.delete('/log/delete-exercise' , { data: {
+    API.delete('/log/delete-exercise' , {
         _id: id
-    }})
+    })
 
 
 export const fetchCurrentExercise = id => API.get(`/log/edit/${id}`);
@@ -43,8 +52,18 @@ export const fetchCurrentExercise = id => API.get(`/log/edit/${id}`);
 
 export const getExercises = () => API.get('/exercises');
 
-export const signupUser = (user) => API.post('/user/signup', {user});
+export const signupUser = (user) => API.post('/user/signup', {user}, config);
 
+
+export const loginUser = user => API.post('/user/login', 
+    {
+        username: user.username, 
+        password: user.password
+    },
+    config
+ );
+
+<<<<<<< Updated upstream
 export const loginUser = async (user) => {
     const config = {
         headers: {
@@ -57,3 +76,6 @@ export const loginUser = async (user) => {
     const res = await API.post('/user/login', body, config);
     return res;
 }
+=======
+
+>>>>>>> Stashed changes

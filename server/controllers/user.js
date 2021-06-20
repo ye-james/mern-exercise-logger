@@ -5,30 +5,30 @@ const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 
 exports.loginUser = async (req, res) => {
-  // get the errors from the validation middleware
-  const errors = validationResult(req);
+  // // get the errors from the validation middleware
+  // const errors = validationResult(req);
 
-  // return 400 if validation failed
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
+  // // return 400 if validation failed
+  // if (!errors.isEmpty()) {
+  //   return res.status(400).json({ errors: errors.array() });
+  // }
 
   const { username, password } = req.body;
-
+  console.log(username, password);
   try {
     // see if the user exists
     const user = await User.findOne({ username });
 
     // return 400 if user doesn't exists in db
-    if (!user) {
-        return res.status(400).json({
-          errors: [
-            {
-              msg: 'Invalid username or password.',
-            },
-          ],
-        });
-    };
+    // if (!user) {
+    //     return res.status(400).json({
+    //       errors: [
+    //         {
+    //           msg: 'Invalid username or password.',
+    //         },
+    //       ],
+    //     });
+    // };
 
     // check if password is correct
     const validPassword = await bcrypt.compare(
@@ -50,11 +50,9 @@ exports.loginUser = async (req, res) => {
     // create json web token
     const token = jwt.sign({email: user.email, id: user._id}, process.env.TOKEN_SECRET, {expiresIn: '1hr'});
     res.status(200).json({
-        message: 'Successfully logged in!',
-        data: {
-            id: user._id, 
-            name: user.name,
-            token: token}
+        id: user._id, 
+        name: user.name,
+        token: token
     })
   } catch (err) {
     console.error(err.message)
