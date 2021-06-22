@@ -63,7 +63,6 @@ export const loginUser = user => API.post('/user/login',
     config
  );
 
-<<<<<<< Updated upstream
 export const loginUser = async (user) => {
     const config = {
         headers: {
@@ -76,6 +75,3 @@ export const loginUser = async (user) => {
     const res = await API.post('/user/login', body, config);
     return res;
 }
-=======
-
->>>>>>> Stashed changes
