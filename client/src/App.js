@@ -10,7 +10,8 @@ import Footer from './components/Footer'
 import Login from './components/Login';
 import Signup from './components/Signup.js';
 import ExerciseForm from './components/ExerciseForm';
-
+import Routine from './components/Routine';
+import Routine2 from './components/Routine2';
 
 const containerStyles = { 
     height: '80%',
@@ -31,6 +32,7 @@ const App = () => {
                 <Route path='/explore' component={Explore}/>
                 <Route path='/user/login' component={Login}/>
                 <Route path='/user/signup' component={Signup}/>
+                <Route path='/routine' component={Routine2}/>
             </Switch>
         </Container>
         <Footer/>

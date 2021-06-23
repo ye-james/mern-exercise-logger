@@ -53,6 +53,15 @@ const NavBar = () => {
             onClick={handleItemClick}
           />
         ) : null}
+         {user ? (
+          <Menu.Item
+            as={Link}
+            to={`routine`}
+            name='routine'
+            active={activeItem === 'routine'}
+            onClick={handleItemClick}
+          />
+        ) : null}
         <Menu.Item
           name='progress'
           as={Link}

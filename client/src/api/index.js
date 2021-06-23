@@ -10,8 +10,6 @@ const config = {
 };
 
 
-
-
 //Create interceptor to include token with our requests if user is logged in
 API.interceptors.request.use((req) => {
     if(localStorage.getItem('profile')) {
@@ -54,21 +52,7 @@ export const getExercises = () => API.get('/exercises');
 
 export const signupUser = (user) => API.post('/user/signup', {user}, config);
 
-
-export const loginUser = user => API.post('/user/login', 
-    {
-        username: user.username, 
-        password: user.password
-    },
-    config
- );
-
 export const loginUser = async (user) => {
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    };
     const {username, password } = user;
     const body = JSON.stringify({username, password});
 
