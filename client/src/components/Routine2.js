@@ -1,37 +1,55 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { Accordion, Form, Grid, Header, Button } from 'semantic-ui-react';
 
 const Routine2 = () => {
 
-    const [set, setSet] = useState({inputs: ['set-0']})
+    //const [set, setSet] = useState({inputs: ['set-0']})
+    const [values, setValues] = useState([{reps: '', weight:''}])
   
     const handleFormSubmit = (e) => {
-        console.log(e.target.id);
+        e.preventDefault();
     }
 
     const appendRow = () => {
-        let newInput = `set-${set.inputs.length}`;
-        const newSet = [...set.inputs.concat(newInput)]
-        setSet({inputs: newSet})
+        // let newInput = `set-${set.inputs.length}`;
+        // const newSet = [...set.inputs.concat(newInput)]
+        // setSet({inputs: newSet})
+        const newValues = [...values];
+        newValues.push({ reps: '', weight: '' });
+        setValues(newValues);
     }
 
-    const removeSet = (row) => {
-      setSet({inputs: [...set.inputs.filter(i => i !== row)]});
+    const removeSet = (index) => {
+      //setSet({inputs: [...set.inputs.filter(i => i !== row)]});
+      const newValues = [...values];
+      newValues.splice(index, 1);
+      setValues(newValues);
     }
 
-    const handleChange = (e) => {
-        e.persist();
+    const handleChange = (e, index) => {
+        const newValues = [...values];
+        if(e.target.name === 'reps') {
+          newValues[index].reps = e.target.value;
+          console.log(newValues);
+        } else {
+          newValues[index].weight = e.target.value;
+          console.log(newValues);
+        }
+        setValues(newValues);
     }
 
     const renderSetPanels = [
       <Form onSubmit={handleFormSubmit}>
-        {set.inputs.map((row,index) => {
+        {values.map((row,index) => {
           return (
-          <Form.Group key={index} widths={2} inline>
-            <Form.Input fluid label='Reps' id={`reps-${index}`} name='reps' width={4} />  
-            <Form.Input fluid label='Weight'  id={`weight-${index}`} name='weight' width={4}/>
-            <Button type="submit" onClick={() => removeSet(row)}>-</Button>
-        </Form.Group> );
+            <Fragment key={`${values}-${index}`}>
+              <Form.Group key={index} widths={2} inline>
+                <Form.Input fluid label='Reps' id={`reps-${index}`} name='reps' width={4} value={row.reps}  onChange={e => handleChange(e,index)}/>  
+                <Form.Input fluid label='Weight'  id={`weight-${index}`} name='weight' width={4} value={row.weight} onChange={e => handleChange(e,index)}/>
+                <Button type="submit" onClick={() => removeSet(index)}>-</Button>
+            </Form.Group> 
+          </Fragment>
+        );
         })}
           <Button onClick={appendRow}>Add Row</Button>
           <Button type="submit">Save</Button>
