@@ -1,103 +1,225 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { Accordion, Form, Grid, Header, Button } from 'semantic-ui-react';
+import { Accordion, Form, Grid, Header, Button, Divider } from 'semantic-ui-react';
+import AddExerciseModal from './AddExerciseModal';
+/** Dynamically create intital routine based on number of days and routine name
+ * 
+ * @param {*} days 
+ * @param {*} name 
+ * @returns 
+ */
+const createInititalRoutine = (days,name) => {
 
-const Routine2 = () => {
-
-    //const [set, setSet] = useState({inputs: ['set-0']})
-    const [values, setValues] = useState([{reps: '', weight:''}])
-  
-    const handleFormSubmit = (e) => {
-        e.preventDefault();
-    }
-
-    const appendRow = () => {
-        // let newInput = `set-${set.inputs.length}`;
-        // const newSet = [...set.inputs.concat(newInput)]
-        // setSet({inputs: newSet})
-        const newValues = [...values];
-        newValues.push({ reps: '', weight: '' });
-        setValues(newValues);
-    }
-
-    const removeSet = (index) => {
-      //setSet({inputs: [...set.inputs.filter(i => i !== row)]});
-      const newValues = [...values];
-      newValues.splice(index, 1);
-      setValues(newValues);
-    }
-
-    const handleChange = (e, index) => {
-        const newValues = [...values];
-        if(e.target.name === 'reps') {
-          newValues[index].reps = e.target.value;
-          console.log(newValues);
-        } else {
-          newValues[index].weight = e.target.value;
-          console.log(newValues);
+  //for now we just return a dummy routine
+return {
+  name,
+  days: [
+    {
+      name:'Day 1: Chest Day',
+      exercises:[
+        {
+          name: 'Bench Press',
+          sets: [
+            {
+                reps: 1,
+                weight:100,
+            },
+            {
+                reps: 1,
+                weight:100,
+            }
+          ]
+        },
+        {
+          name: 'Incline Bench Press',
+          sets: [
+            {
+                reps: 1,
+                weight:100,
+            }
+          ]
         }
-        setValues(newValues);
+      ]
+    },
+    {
+      name:'Day 2: Leg Day',
+      exercises:[
+        {
+          name: 'Squat',
+          sets: [
+            {
+                reps: 1,
+                weight:100,
+            },
+            {
+                reps: 1,
+                weight:100,
+            }
+          ]
+        },
+        {
+          name: 'DeadLift ',
+          sets: [
+            {
+                reps: 1,
+                weight:100,
+            }
+          ]
+        }
+      ]
+    },
+    {
+      name:'Day 3: Leg Day',
+      exercises:[
+        {
+          name: 'Squat',
+          sets: [
+            {
+                reps: 1,
+                weight:100,
+            },
+            {
+                reps: 1,
+                weight:100,
+            }
+          ]
+        },
+        {
+          name: 'DeadLift ',
+          sets: [
+            {
+                reps: 1,
+                weight:100,
+            }
+          ]
+        }
+      ]
     }
+  ]
+}
+}
 
-    const renderSetPanels = [
-      <Form onSubmit={handleFormSubmit}>
-        {values.map((row,index) => {
-          return (
-            <Fragment key={`${values}-${index}`}>
-              <Form.Group key={index} widths={2} inline>
-                <Form.Input fluid label='Reps' id={`reps-${index}`} name='reps' width={4} value={row.reps}  onChange={e => handleChange(e,index)}/>  
-                <Form.Input fluid label='Weight'  id={`weight-${index}`} name='weight' width={4} value={row.weight} onChange={e => handleChange(e,index)}/>
-                <Button type="submit" onClick={() => removeSet(index)}>-</Button>
-            </Form.Group> 
-          </Fragment>
-        );
-        })}
-          <Button onClick={appendRow}>Add Row</Button>
-          <Button type="submit">Save</Button>
-      </Form>
-    ]
+const RoutineContext = React.createContext();
 
-  const level1Panels = [
-      { key: 'panel-1a', title: 'Bench Press', content: renderSetPanels},
-      { key: 'panel-ba', title: 'Incline Bench Press', content: 'Level 1B Contents' },
-    ]
-    
+const Routine2 = ({days = 7, name ='Sample Routine 1'}) => {
 
-    
-    const level2Panels = [
-      { key: 'panel-2a', title: 'Level 2A', content: 'Level 2A Contents' },
-      { key: 'panel-2b', title: 'Level 2B', content: 'Level 2B Contents' },
-    ]
-
-
-    const Level1Content = (
-      <div>
-        <Accordion.Accordion panels={level1Panels} />
-      </div>
-    )
-
-
-    const Level2Content = (
-      <div>
-        Welcome to level 2
-        <Accordion.Accordion panels={level2Panels} />
-      </div>
-    )
-    
-    const rootPanels = [
-      { key: 'panel-1', title: 'Day 1: Chest Day', content: { content: Level1Content } },
-      { key: 'panel-2', title: 'Day 2: Leg Day', content: { content: Level2Content } },
-    ]
+  const INTITAL_ROUTINE = createInititalRoutine(days,name)
+    console.log(INTITAL_ROUTINE);
+  const [routine, setRoutine] = useState(INTITAL_ROUTINE)
 
     return (
         <Grid columns={2}>
             <Grid.Row textAlign='center'>
-                <Header a2='h2'>Start Adding Exercies!</Header>
+                <Header as='h2'>Start Adding Exercies!</Header>
             </Grid.Row>
             <Grid.Row>
-              <Accordion defaultActiveIndex={0} panels={rootPanels} styled/>
+                <Header as='h2'>{routine.name}</Header>
             </Grid.Row>
+            <RoutineContext.Provider value={{routine,setRoutine}}>
+            <Grid.Row>
+              <Days days={routine.days}/>
+            </Grid.Row>
+            <Grid.Row>
+                <Button className='primary'>Save Routine</Button>
+            </Grid.Row>
+            </RoutineContext.Provider>
         </Grid>
     )
+}
+
+
+
+const Days = ({days}) => {
+
+  const panels = days.map((day,idx) => ({key:`day-${idx}`,title:day.name,content: {content: <Exercises exercises={day.exercises} dayIdx={idx} exclusive={false}/>}}))
+
+  return <Accordion defaultActiveIndex={0} panels={panels} exclusive={false} styled/>
+}
+
+const Exercises = ({exercises, dayIdx}) => {
+
+    const { routine, setRoutine } = React.useContext(RoutineContext);
+
+    const addExerciseToRoutine = () => {
+        const routineCopy = {...routine};
+
+    }
+
+  const panels = exercises.map((exercise,idx) => (
+      { key:`exercise-${idx}`,title:exercise.name,content: {content: <Sets sets={exercise.sets} dayIdx={dayIdx} exerciseIdx={idx} exclusive={false}/>}
+    })
+    )
+
+  return (
+      <>
+        <Accordion defaultActiveIndex={0} panels={panels} exclusive={false} styled/>
+        <Divider/>
+        <AddExerciseModal/>
+        </>
+    )
+}
+
+const Sets = ({sets,dayIdx, exerciseIdx }) => {
+
+  const {routine, setRoutine}= React.useContext(RoutineContext);
+
+  const _getCurrExercise = (routine) => {
+    const days = routine.days
+    const currDay = days[dayIdx]
+    const currExercise = currDay.exercises[exerciseIdx]
+    return currExercise
+
+  }
+
+  const onSubmit = () => {
+
+  }
+
+  const addRow = () => {
+    const routineCopy = {...routine}
+    const currExercise = _getCurrExercise(routineCopy)
+    currExercise.sets.push({reps:0, weight:0})
+    setRoutine(routineCopy)
+  }
+  const removeRow = (idx) => {
+    const routineCopy = {...routine}
+    const currExercise = _getCurrExercise(routineCopy)
+    const sets = currExercise.sets
+    sets.splice(idx,1)
+    setRoutine(routineCopy)
+  }
+
+  const onRepChange = (value,idx) => {
+    const routineCopy = {...routine}
+    const currExercise = _getCurrExercise(routineCopy)
+    const sets = currExercise.sets
+    const currSet = sets[idx]
+    currSet.reps = value
+    setRoutine(routineCopy)
+  }
+
+  const onWeightChange = (value,idx) => {
+    const routineCopy = {...routine}
+    const currExercise = _getCurrExercise(routineCopy)
+    const sets = currExercise.sets
+    const currSet = sets[idx]
+    currSet.weight = value
+    setRoutine(routineCopy)
+  }
+
+      return <Form onSubmit={onSubmit}>
+        {sets.map((row,index) => {
+          return (
+            <Fragment key={`day-${dayIdx}-exercise-${exerciseIdx}-set-${index}`}>
+              <Form.Group key={index} widths={2} inline>
+                <Form.Input fluid label='Reps' id={`day-${dayIdx}-exercise-${exerciseIdx}-set-${index}-rep`} name='reps' width={4} value={row.reps}  onChange={e => onRepChange(e.target.value,index)}/>  
+                <Form.Input fluid label='Weight'  id={`day-${dayIdx}-exercise-${exerciseIdx}-set-${index}-weight`} name='weight' width={4} value={row.weight} onChange={e => onWeightChange(e.target.value,index)}/>
+                <Button inverted color='red' type="submit" onClick={() => removeRow(index)}>-</Button>
+            </Form.Group> 
+          </Fragment>
+        );
+        })}
+          <Button onClick={addRow}>Add Set</Button>
+      </Form>
 }
 
 export default Routine2;

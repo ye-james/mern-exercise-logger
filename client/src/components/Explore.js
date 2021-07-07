@@ -14,7 +14,7 @@ const Explore = () => {
 
     useEffect(() => {
         dispatch(getExercises());
-    }, [dispatch])
+    }, [])
 
     return (
         <div>
@@ -32,12 +32,12 @@ const Explore = () => {
                 <Grid.Row>
                     <Grid.Column>
                         <Item.Group>
-                            { exercises && exercises.length !== 0 ? exercises[0].map(exercise => {
+                            { exercises && exercises.length !== 0 ? exercises.map(exercise => {
                                 return ( 
                                     <Item>
                                         <Item.Image size='small' src={exercise.link} />
                                         <Item.Content>
-                                        <Item.Header as='a'>{exercise.exercise}</Item.Header>
+                                        <Item.Header as='a'>{exercise.title}</Item.Header>
                                         <Item.Meta>{exercise.exercise_type}</Item.Meta>
                                         <Item.Description>
                                             <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
