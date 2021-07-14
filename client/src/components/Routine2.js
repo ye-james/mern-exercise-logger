@@ -1,6 +1,8 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { Accordion, Form, Grid, Header, Button, Divider } from 'semantic-ui-react';
-import AddExerciseModal from './AddExerciseModal';
+import { useDispatch } from 'react-redux'
+import { Accordion, Form, Grid, Header, Button, Divider, Segment, Input } from 'semantic-ui-react';
+import { getExercises } from '../redux/actions/exercises';
+import SearchExercises from './SearchExercises';
 /** Dynamically create intital routine based on number of days and routine name
  * 
  * @param {*} days 
@@ -103,8 +105,12 @@ const RoutineContext = React.createContext();
 const Routine2 = ({days = 7, name ='Sample Routine 1'}) => {
 
   const INTITAL_ROUTINE = createInititalRoutine(days,name)
-    console.log(INTITAL_ROUTINE);
   const [routine, setRoutine] = useState(INTITAL_ROUTINE)
+  const  dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getExercises())
+  },[])
 
     return (
         <Grid columns={2}>
@@ -137,7 +143,9 @@ const Days = ({days}) => {
 
 const Exercises = ({exercises, dayIdx}) => {
 
-    const { routine, setRoutine } = React.useContext(RoutineContext);
+    const [addStatus, setAddStatus] = useState(false);
+    const [newExercise, setNewExercise] = useState('');
+    const {routine, setRoutine } = React.useContext(RoutineContext);
 
     const addExerciseToRoutine = () => {
         const routineCopy = {...routine};
@@ -145,15 +153,55 @@ const Exercises = ({exercises, dayIdx}) => {
     }
 
   const panels = exercises.map((exercise,idx) => (
-      { key:`exercise-${idx}`,title:exercise.name,content: {content: <Sets sets={exercise.sets} dayIdx={dayIdx} exerciseIdx={idx} exclusive={false}/>}
+      { key:`exercise-${idx}`,
+        title:exercise.name,
+        content: {
+          content: 
+            <Sets sets={exercise.sets} dayIdx={dayIdx} exerciseIdx={idx} exclusive={false}/>
+        }
     })
     )
+  
+  const adddExerciseForm = (
+    <Segment basic padded>
+      <Header as='h4'>Search existing exercises</Header>
+      <SearchExercises setNewExercise={setNewExercise}/>
+      <Divider horizontal>or</Divider>
+      <Header as='h4'>Add your own exercise</Header>
+      <Form>
+        <Input focus placeholder='ex: Calf Extensions' value={newExercise} onChange={e => setNewExercise(e.target.value)}></Input>
+      </Form>
+    </Segment>
+    );
+
+  
+
+  const handleExerciseAdd = () => {
+      if(!addStatus) {
+        setAddStatus(true);
+      } else if(addStatus) {
+        const newExerciseObj = {
+          name: newExercise,
+          sets: []
+        }
+        const routineCopy = {...routine}
+        routineCopy.days[dayIdx].exercises.push(newExerciseObj);
+        setRoutine(routineCopy);
+        setAddStatus(false);
+      }
+  }
 
   return (
       <>
         <Accordion defaultActiveIndex={0} panels={panels} exclusive={false} styled/>
         <Divider/>
-        <AddExerciseModal/>
+        {addStatus && adddExerciseForm}
+        <Button className={addStatus ? 'primary' : ''} disabled={addStatus && newExercise === ''} onClick={handleExerciseAdd}>{addStatus ? 'Save' : 'Add Exercise'}</Button>
+        {addStatus && <Button onClick={() => {
+          setAddStatus(false)
+          setNewExercise('')
+          }
+          }>Cancel</Button>}
         </>
     )
 }

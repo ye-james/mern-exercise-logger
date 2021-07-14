@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Search, Grid, Header, Segment } from 'semantic-ui-react'
+import { Search, Grid } from 'semantic-ui-react'
 import { getExercises } from '../redux/actions/exercises'
 
 
@@ -27,17 +27,13 @@ function searchReducer(state, action) {
   }
 }
 
-const SearchExercises = () => {
+const SearchExercises = ({setNewExercise}) => {
   const [state, dispatch] = React.useReducer(searchReducer, initialState);
-  const dispatcher = useDispatch();
   const exercises = useSelector(state => state.exercises.exercises)
   const { loading, results, value } = state;
 
   const timeoutRef = React.useRef();
     
-  React.useEffect(() => {
-    dispatcher(getExercises())
-  },[])
 
 
   const handleSearchChange = React.useCallback((e, data) => {
@@ -61,6 +57,13 @@ const SearchExercises = () => {
     }, 300);
   }, []);
 
+  const handleResultSelect = (e, data) => {
+    dispatch({
+      type: "UPDATE_SELECTION",
+      selection: data.result.title
+    })
+    setNewExercise(data.result.title);
+  }
 
   React.useEffect(() => {
     return () => {
@@ -73,12 +76,7 @@ const SearchExercises = () => {
       <Grid.Column width={6}>
         <Search
           loading={loading}
-          onResultSelect={(e, data) =>
-            dispatch({
-              type: "UPDATE_SELECTION",
-              selection: data.result.title
-            })
-          }
+          onResultSelect={handleResultSelect}
           onSearchChange={handleSearchChange}
           results={results}
           value={value}
