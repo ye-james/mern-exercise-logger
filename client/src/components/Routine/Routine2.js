@@ -1,8 +1,8 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { useDispatch } from 'react-redux'
 import { Accordion, Form, Grid, Header, Button, Divider, Segment, Input } from 'semantic-ui-react';
-import { getExercises } from '../redux/actions/exercises';
-import SearchExercises from './SearchExercises';
+import { getExercises } from '../../redux/actions/exercises';
+import SearchExercises from '../SearchExercises';
 /** Dynamically create intital routine based on number of days and routine name
  * 
  * @param {*} days 

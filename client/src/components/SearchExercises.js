@@ -1,8 +1,7 @@
 import _ from 'lodash'
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Search, Grid } from 'semantic-ui-react'
-import { getExercises } from '../redux/actions/exercises'
 
 
 const initialState = {

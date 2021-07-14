@@ -10,8 +10,8 @@ import Footer from './components/Footer'
 import Login from './components/Login';
 import Signup from './components/Signup.js';
 import ExerciseForm from './components/ExerciseForm';
-import Routine from './components/Routine';
-import Routine2 from './components/Routine2';
+import Routine from './components/Routine/Routine';
+import Routine2 from './components/Routine/Routine2';
 
 const containerStyles = { 
     height: '80%',
