@@ -14,6 +14,7 @@ const Routine = () => {
         showNameInput: false,
         showRoutine: false
     });
+    
     const [routine, setRoutine] = useState({
         name: '',
         days: []

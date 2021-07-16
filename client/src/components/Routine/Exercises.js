@@ -18,7 +18,7 @@ const Exercises = ({exercises, dayIdx}) => {
 
   const panels = exercises.map((exercise,idx) => (
       { key:`exercise-${idx}`,
-        title:exercise.name,
+        title: exercise.length === 0 ? 'No Exercises' : exercise.name,
         content: {
           content: 
             <Sets sets={exercise.sets} dayIdx={dayIdx} exerciseIdx={idx} exclusive={false}/>
@@ -57,7 +57,7 @@ const Exercises = ({exercises, dayIdx}) => {
 
   return (
       <>
-        <Accordion defaultActiveIndex={0} panels={panels} exclusive={false} styled/>
+        {exercises.length === 0 ? <Header as='h3'>There are no exercises for this day! Start adding below!</Header> :<Accordion panels={panels} exclusive={false} styled/> }
         <Divider/>
         {addStatus && adddExerciseForm}
         <Button className={addStatus ? 'primary' : ''} disabled={addStatus && newExercise === ''} onClick={handleExerciseAdd}>{addStatus ? 'Add' : 'Add Exercise'}</Button>

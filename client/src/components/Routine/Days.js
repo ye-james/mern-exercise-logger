@@ -11,7 +11,7 @@ const Days = ({days}) => {
         content: {content: <Exercises exercises={day.exercises} dayIdx={idx} exclusive={false}/>}
       })
     )
-    return <Accordion defaultActiveIndex={0} panels={panels} exclusive={false} styled/>
+    return <Accordion panels={panels} exclusive={false} styled/>
   }
 
 export default Days;
