@@ -1,6 +1,8 @@
-import React from 'react';
-import { Segment, Header, Divider, Input, Form, Accordion} from 'semantic-ui-react'
+import React, { useState } from 'react';
+import { Segment, Header, Divider, Input, Form, Accordion, Button} from 'semantic-ui-react'
+import Sets from './Sets'
 import SearchExercises from '../SearchExercises';
+import { RoutineContext } from './Routine';
 
 
 const Exercises = ({exercises, dayIdx}) => {
@@ -58,7 +60,7 @@ const Exercises = ({exercises, dayIdx}) => {
         <Accordion defaultActiveIndex={0} panels={panels} exclusive={false} styled/>
         <Divider/>
         {addStatus && adddExerciseForm}
-        <Button className={addStatus ? 'primary' : ''} disabled={addStatus && newExercise === ''} onClick={handleExerciseAdd}>{addStatus ? 'Save' : 'Add Exercise'}</Button>
+        <Button className={addStatus ? 'primary' : ''} disabled={addStatus && newExercise === ''} onClick={handleExerciseAdd}>{addStatus ? 'Add' : 'Add Exercise'}</Button>
         {addStatus && <Button onClick={() => {
           setAddStatus(false)
           setNewExercise('')
