@@ -1,10 +1,8 @@
 import React, { useState, useEffect, Fragment, useContext } from 'react';
 import { useDispatch } from 'react-redux'
-import { Accordion, Form, Grid, Header, Button, Divider, Segment, Input } from 'semantic-ui-react';
-import { getExercises } from '../../redux/actions/exercises';
-import SearchExercises from '../SearchExercises';
+import { Grid, Header, Button } from 'semantic-ui-react';
+import { getExercises, addRoutine } from '../../redux/actions/exercises';
 import { RoutineContext } from './Routine';
-import Sets from './Sets';
 import Days from './Days'
 /** Dynamically create intital routine based on number of days and routine name
  * 
@@ -105,7 +103,7 @@ return {
 
 //const RoutineContext = React.createContext();
 
-const Routine2 = ({days = 7, name ='Sample Routine 1'}) => {
+const Routine2 = () => {
 
   // const INTITAL_ROUTINE = createInititalRoutine(days,name)
   // const [routine, setRoutine] = useState(INTITAL_ROUTINE)
@@ -116,6 +114,10 @@ const Routine2 = ({days = 7, name ='Sample Routine 1'}) => {
     dispatch(getExercises())
   },[])
 
+    const saveRoutine = () => {
+      dispatch(addRoutine(routine))
+    }
+
     return (
         <Grid columns={2}>
             <Grid.Row textAlign='center'>
@@ -124,14 +126,12 @@ const Routine2 = ({days = 7, name ='Sample Routine 1'}) => {
             <Grid.Row>
                 <Header as='h2'>{routine.name}</Header>
             </Grid.Row>
-            {/* <RoutineContext.Provider value={{routine,setRoutine}}> */}
             <Grid.Row>
               <Days days={routine.days}/>
             </Grid.Row>
             <Grid.Row>
-                <Button className='primary'>Save Routine</Button>
+                <Button className='primary' onClick={saveRoutine}>Save Routine</Button>
             </Grid.Row>
-            {/* </RoutineContext.Provider> */}
         </Grid>
     )
 }

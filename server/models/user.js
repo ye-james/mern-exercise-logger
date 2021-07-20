@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
     logs: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Log'
+    }],
+    routines: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Routine'
     }]
 })
 

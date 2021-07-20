@@ -5,6 +5,11 @@ export default (state=[], action) => {
                 ...state,
                 exercises: action.payload
             }
+        case 'ADD_ROUTINE': 
+            return {
+                ...state,
+                routine: action.payload
+            }
         default:
             return state;
     }

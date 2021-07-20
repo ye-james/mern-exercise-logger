@@ -37,7 +37,7 @@ const Routine = () => {
         for(let i = 0; i < selectedDays; i++) {
             let newDayObj = {
                 exercises: [],
-                name: ''
+                exerciseName: ''
             }
             newDaysArr.push(newDayObj);
         }
@@ -127,7 +127,7 @@ const Routine = () => {
                 <Grid.Row>
                     <Button 
                         primary
-                        disabled={selectedDays===0}
+                        disabled={selectedDays === 0}
                         onClick={() => setDays()}
                     >Next</Button>
                     <Button 
@@ -163,6 +163,15 @@ const Routine = () => {
                         primary
                         onClick={() => setShowNext({...showNext, showNameInput: false, showRoutine: true})}
                     >Next</Button>
+                    <Button 
+                        color='red'
+                        onClick={() => {
+                                setShowNext({...showNext, showNameInput: false, showDays: true})
+                                setRoutine({...routine, days: []})
+                                setSelectedDays(0);
+                            }
+                        }
+                    >Back</Button>
                 </Grid.Row>
                 <Grid.Row>
                     {/* <Button primary>Next</Button> */}

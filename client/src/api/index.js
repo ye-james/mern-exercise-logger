@@ -45,6 +45,13 @@ export const deleteExercise = (id) =>
     })
 
 
+export const saveRoutine = (routine) => {
+    API.post(`/routine/${JSON.parse(localStorage.getItem('profile')).userId}`, {
+        routine
+    }, 
+    config);
+}
+
 export const fetchCurrentExercise = id => API.get(`/log/edit/${id}`);
 
 

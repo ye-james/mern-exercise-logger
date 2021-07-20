@@ -13,11 +13,7 @@ const Sets = ({sets,dayIdx, exerciseIdx }) => {
       return currExercise
   
     }
-  
-    const onSubmit = () => {
-  
-    }
-  
+
     const addRow = () => {
       const routineCopy = {...routine}
       const currExercise = _getCurrExercise(routineCopy)
@@ -48,9 +44,10 @@ const Sets = ({sets,dayIdx, exerciseIdx }) => {
       const currSet = sets[idx]
       currSet.weight = value
       setRoutine(routineCopy)
+      console.log(routine);
     }
   
-        return <Form onSubmit={onSubmit}>
+        return <Form>
           {sets.map((row,index) => {
             return (
               <React.Fragment key={`day-${dayIdx}-exercise-${exerciseIdx}-set-${index}`}>

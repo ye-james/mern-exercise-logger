@@ -11,10 +11,6 @@ const Exercises = ({exercises, dayIdx}) => {
     const [newExercise, setNewExercise] = useState('');
     const {routine, setRoutine } = React.useContext(RoutineContext);
 
-    const addExerciseToRoutine = () => {
-        const routineCopy = {...routine};
-
-    }
 
   const panels = exercises.map((exercise,idx) => (
       { key:`exercise-${idx}`,
@@ -45,7 +41,7 @@ const Exercises = ({exercises, dayIdx}) => {
         setAddStatus(true);
       } else if(addStatus) {
         const newExerciseObj = {
-          name: newExercise,
+          exerciseName: newExercise,
           sets: []
         }
         const routineCopy = {...routine}

@@ -35,8 +35,10 @@ exports.getRoutine = (req,res) => {
 
 //Create and add new routine for user if not already exist
 exports.addRoutine = async (req,res) => {
-    const routineName = req.params.userID;
-    console.log(routineName);
+    
+    const { name } = req.body.routine;
+    const { routine } = req.body;
+
     /*
     const newRoutine = new Routine({
         name: 'New Routine',
@@ -56,28 +58,29 @@ exports.addRoutine = async (req,res) => {
         }]
     }) */
     
-    const existingRoutine = await Routine.exists({name: routineName});
+    const existingRoutine = await Routine.exists({name});
     console.log(existingRoutine);
     if(existingRoutine) {
         res.status(404).json({error: "Failed to add! That routine already exists!"});
     }
-    const newRoutine = new Routine({
-        name: 'Leg Day',
-        exercises: [{
-            exerciseName: 'Squats',
-            set: [
-                {reps: 10,weight: 135},
-                {reps: 10, weight: 145}
-            ]
-        },
-        {
-            exerciseName: 'Deadlifts',
-            set: [
-                {reps: 5, weight: 155},
-                {reps: 5, weight: 165}
-            ]
-        }]
-    }) 
+    // const newRoutine = new Routine({
+    //     name: 'Leg Day',
+    //     exercises: [{
+    //         exerciseName: 'Squats',
+    //         set: [
+    //             {reps: 10,weight: 135},
+    //             {reps: 10, weight: 145}
+    //         ]
+    //     },
+    //     {
+    //         exerciseName: 'Deadlifts',
+    //         set: [
+    //             {reps: 5, weight: 155},
+    //             {reps: 5, weight: 165}
+    //         ]
+    //     }]
+    // }) 
+    const newRoutine = new Routine(routine);
     newRoutine.save()
     .then(result => {
         res.status(200).json(result)
