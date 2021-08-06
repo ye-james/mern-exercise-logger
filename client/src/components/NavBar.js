@@ -53,7 +53,7 @@ const NavBar = () => {
             onClick={handleItemClick}
           />
         ) : null}
-         {user ? (
+        {user ? (
           <Menu.Item
             as={Link}
             to={`routine`}
@@ -62,13 +62,16 @@ const NavBar = () => {
             onClick={handleItemClick}
           />
         ) : null}
-        <Menu.Item
-          name='progress'
-          as={Link}
-          to='progress'
-          active={activeItem === 'Progress'}
-          onClick={handleItemClick}
-        />
+        {user ? (
+          <Menu.Item
+            name='progress'
+            as={Link}
+            to='progress'
+            active={activeItem === 'Progress'}
+            onClick={handleItemClick}
+          />
+        ) : null}
+
         <Menu.Menu position='right'>
           <Menu.Item>
             <Input icon='search' placeholder='Search...' />
