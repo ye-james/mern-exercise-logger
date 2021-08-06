@@ -1,13 +1,13 @@
 const initalState = {
     user: null,
-    isAuthenticated: null}
-
+    isAuthenticated: null
+}
 
 export default (state = initalState, action) => {
     switch(action.type) {
         case 'LOGIN_SUCCESS': 
             localStorage.setItem('profile', JSON.stringify({userId: action.payload.id, token: action.payload.token}))
-            
+           
             return {
                 ...state,
                 isAuthenticated: true,
@@ -16,8 +16,8 @@ export default (state = initalState, action) => {
         case 'SIGNUP_SUCCESS': 
             return {
                 ...state,
-                ...action.payload,
-                isAuthenticated: true
+                isAuthenticated: true,
+                user: action.payload
             }
         case 'AUTH_ERROR':
             return;
