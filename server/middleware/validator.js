@@ -1,41 +1,47 @@
-const { body, validationResult } = require('express-validator');
+const { check, validationResult } = require('express-validator');
 
 const userValidationRules = () => {
-    return [
-        body('username').notEmpty(),
-        body('password').isLength({ min:5})
-    ]
+  return [
+    check('username', 'Username is required.').notEmpty(),
+    check('password', 'Password is required.').notEmpty(),
+  ];
+};
 
-}
+const signUpValidationRules = () => {
+  return [
+    check('name', 'Name is required.').notEmpty(),
+    check('username', 'Username is required.').notEmpty(),
+    check(
+      'password',
+      'Please enter a password that is 6 or more characters.'
+    ).isLength({ min: 6 }),
+  ];
+};
 
 const editRoutineValidationRules = () => {
-    return [
-        body['exercises.*.exerciseName.*.set'].notEmpty(),
-        body['exercises.*.exerciseName.*.reps'].notEmpty(),
-        body['exercises.*.exerciseName.*.weight'].notEmpty()
+  return [
+    check['exercises.*.exerciseName.*.set'].notEmpty(),
+    check['exercises.*.exerciseName.*.reps'].notEmpty(),
+    check['exercises.*.exerciseName.*.weight'].notEmpty(),
+  ];
+};
 
-    ]
-}
+const validate = (req, res, next) => {
+  const errors = validationResult(req);
 
-const validate = (req,res,next) => {
-    const errors = validationResult(req);
+  //continue if no errors
+  if (errors.isEmpty()) {
+    return next();
+  }
 
-    console.log(errors);
-    //continue if no errors
-    if (errors.isEmpty()) {
-        return next()
-    }
-
-    const extractedErrors = [];
-    errors.array().map(err => extractedErrors.push({[err.param]: err.msg}));
-
-    return res.status(422).json({
-        errors: extractedErrors
-    })
-}
+  return res.status(400).json({
+    errors: errors.array(),
+  });
+};
 
 module.exports = {
-    userValidationRules,
-    editRoutineValidationRules,
-    validate
-}
+  userValidationRules,
+  signUpValidationRules,
+  editRoutineValidationRules,
+  validate,
+};
