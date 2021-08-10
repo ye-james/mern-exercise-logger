@@ -43,7 +43,7 @@ export const fetchCurrentExercise = id => async(dispatch) => {
 
 export const deleteExercise = id => async(dispatch) => {
     try {
-        const result = await api.deleteExercise(id);
+        await api.deleteExercise(id);
         dispatch({type: 'DELETE_EXERCISE', payload: id});
 
     } catch (err) {

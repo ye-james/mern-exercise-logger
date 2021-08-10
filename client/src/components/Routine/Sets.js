@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, Fragment } from 'semantic-ui-react';
+import { Form, Button } from 'semantic-ui-react';
 import { RoutineContext } from './Routine';
 
 const Sets = ({sets,dayIdx, exerciseIdx }) => {

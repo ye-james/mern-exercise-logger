@@ -16,7 +16,7 @@ const containerStyles = {
 
 const ExerciseLog = () => {  
     const dispatch = useDispatch();
-    let { path, url } = useRouteMatch();
+    let { url } = useRouteMatch();
 
     const logs = useSelector(state => state.logs.logs);
     const [startDate, setStartDate] = useState(new Date());
@@ -25,7 +25,7 @@ const ExerciseLog = () => {
 
     useEffect(() => {
         dispatch(getLog())
-    }, [])
+    }, [dispatch])
 
 
     const handleModal = () => {

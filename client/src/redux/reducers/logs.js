@@ -5,7 +5,7 @@ export const INITIAL_STATE = {
     successfullyDeleted: false
 }
 
-export default (state = INITIAL_STATE, action) => {
+const logs = (state = INITIAL_STATE, action) => {
     switch(action.type) {
         case 'FETCH_LOG':
             console.log('dispatched ')
@@ -39,3 +39,4 @@ export default (state = INITIAL_STATE, action) => {
     }
 }
 
+export default logs;

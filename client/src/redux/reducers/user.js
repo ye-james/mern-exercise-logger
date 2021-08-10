@@ -3,7 +3,7 @@ const initalState = {
     isAuthenticated: null
 }
 
-export default (state = initalState, action) => {
+const user = (state = initalState, action) => {
     switch(action.type) {
         case 'LOGIN_SUCCESS': 
             localStorage.setItem('profile', JSON.stringify({userId: action.payload.id, token: action.payload.token}))
@@ -39,3 +39,5 @@ export default (state = initalState, action) => {
             return state;
     }
 }
+
+export default user;

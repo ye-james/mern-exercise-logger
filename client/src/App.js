@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { Container } from 'semantic-ui-react'
 
 import Home from './components/Home';
@@ -10,8 +10,8 @@ import Footer from './components/Footer'
 import Login from './components/Login';
 import Signup from './components/Signup.js';
 import ExerciseForm from './components/ExerciseForm';
-import Routine from './components/Routine/Routine';
-import Routine2 from './components/Routine/Routine2';
+import Routine from './components/routine/Routine';
+
 
 const containerStyles = { 
     height: '80%',
@@ -28,7 +28,7 @@ const App = () => {
                 <Route path='/' component={Home} exact/>
                 <Route path='/log/:userId' component={ExerciseLog} exact />
                 <Route path={'/log/edit/:exerciseId'} component={ExerciseForm}/>
-                <Route path={'/log/add'} component={ExerciseForm}/>
+                <Route path={'/log/add'} component={ExerciseForm} exact/>
                 <Route path='/explore' component={Explore}/>
                 <Route path='/user/login' component={Login}/>
                 <Route path='/user/signup' component={Signup}/>

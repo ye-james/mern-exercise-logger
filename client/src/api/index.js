@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { ModalActions } from 'semantic-ui-react';
 
 const API = axios.create({ baseURL: 'http://localhost:8000' });
 

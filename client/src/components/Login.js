@@ -30,7 +30,7 @@ const Login = () => {
           <Header as='h1'>Login to see your current progress</Header>
         </Grid.Row>
         <Grid.Row>
-          <Grid.Column centered columns={16}>
+          <Grid.Column centered="true" columns={16}>
             <Form onSubmit={handleUserLogin}>
               <Form.Input
                 label='Username'

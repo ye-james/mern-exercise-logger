@@ -1,4 +1,4 @@
-export default (state=[], action) => {
+const exercises = (state=[], action) => {
     switch(action.type) {
         case 'FETCH_EXERCISES':
             return {
@@ -14,3 +14,5 @@ export default (state=[], action) => {
             return state;
     }
 }
+
+export default exercises;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useRouteMatch, useHistory, useParams} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Modal, Header, Button, Form } from 'semantic-ui-react';
+import { Modal, Button, Form } from 'semantic-ui-react';
 import { addExercise, fetchCurrentExercise, updateExercise } from '../redux/actions/log';
 
 //Use State
@@ -24,7 +24,7 @@ const ExerciseForm = ({open, handleModal}) => {
 
     useEffect(() => {
         dispatch(fetchCurrentExercise(id))
-    }, [])
+    }, [dispatch, id])
 
     useEffect(() => {
         if(currExercise) {

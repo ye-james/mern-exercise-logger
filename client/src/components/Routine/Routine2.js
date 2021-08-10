@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment, useContext } from 'react';
+import React, {useEffect, useContext } from 'react';
 import { useDispatch } from 'react-redux'
 import { Grid, Header, Button } from 'semantic-ui-react';
 import { getExercises, addRoutine } from '../../redux/actions/exercises';

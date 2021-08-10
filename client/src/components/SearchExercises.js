@@ -54,7 +54,7 @@ const SearchExercises = ({setNewExercise}) => {
         results: _.filter(exercises, isMatch)
       });
     }, 300);
-  }, []);
+  }, [exercises]);
 
   const handleResultSelect = (e, data) => {
     dispatch({
