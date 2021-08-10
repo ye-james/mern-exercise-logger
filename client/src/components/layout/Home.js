@@ -1,6 +1,6 @@
 import React from 'react'
 import { Segment, Button, Header, Icon, Container, Item, Image} from 'semantic-ui-react';
-import homeImg from '../imgs/pexels-victor-freitas-2261482.jpg';
+import homeImg from '../../imgs/pexels-victor-freitas-2261482.jpg';
 
 
 const segmentMain = {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useRouteMatch, useHistory, useParams} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal, Button, Form } from 'semantic-ui-react';
-import { addExercise, fetchCurrentExercise, updateExercise } from '../redux/actions/log';
+import { addExercise, fetchCurrentExercise, updateExercise } from '../../redux/actions/log';
 
 //Use State
 //If in editing mode then populate form filtering state by ID

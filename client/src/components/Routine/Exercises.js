@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Segment, Header, Divider, Input, Form, Accordion, Button} from 'semantic-ui-react'
 import Sets from './Sets'
-import SearchExercises from '../SearchExercises';
+import SearchExercises from '../log/SearchExercises';
 import { RoutineContext } from './Routine';
 
 

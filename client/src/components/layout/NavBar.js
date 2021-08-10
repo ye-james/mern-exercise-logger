@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Menu, Segment, Input, Button } from 'semantic-ui-react';
-import { logoutUser } from '../redux/actions/auth';
+import { logoutUser } from '../../redux/actions/auth';
 
 const NavBar = () => {
   const dispatch = useDispatch();
@@ -79,7 +79,7 @@ const NavBar = () => {
           {loggedIn && user ? (
             <Menu.Item name={`Welcome ${user.name.split(' ')[0]}`} />
           ) : (
-            <Menu.Item name='sign up' as={Link} to='/user/signup' />
+            <Menu.Item name='sign up' as={Link} to='/signup' />
           )}
           {loggedIn ? (
             <Menu.Item
@@ -93,7 +93,7 @@ const NavBar = () => {
               name='login'
               active={activeItem === 'login'}
               as={Link}
-              to='/user/login'
+              to='/login'
             />
           )}
         </Menu.Menu>

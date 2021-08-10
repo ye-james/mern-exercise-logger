@@ -1,14 +1,11 @@
 import React, { useState, useEffect} from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteExercise, getLog } from '../redux/actions/log'
 import { Container, Input, Divider, Header, Table, Button, Label } from 'semantic-ui-react';
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import ExerciseForm from './ExerciseForm';
-import { fetchCurrentExercise } from '../redux/actions/log'
-
-
+import { fetchCurrentExercise, deleteExercise, getLog  } from '../../redux/actions/log';
 
 const containerStyles = {
     margin: '4em 0 4em 0'

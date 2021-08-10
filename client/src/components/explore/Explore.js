@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react' 
 import { useDispatch, useSelector} from 'react-redux';
 import { Container, Header, Divider, Grid, Item, Image, Button } from 'semantic-ui-react';
-import { getExercises } from '../redux/actions/exercises'
+import { getExercises } from '../../redux/actions/exercises'
 const containerStyles={
     margin: '4em 0 4em 0'
 }
@@ -54,7 +54,6 @@ const Explore = () => {
             </Grid>
         </Container>
         </div>
-
     )
 }
 
