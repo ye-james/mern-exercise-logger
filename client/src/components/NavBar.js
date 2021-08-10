@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -39,7 +39,7 @@ const NavBar = () => {
         />
         <Menu.Item
           as={Link}
-          to='explore'
+          to='/explore'
           name='explore'
           active={activeItem === 'explore'}
           onClick={handleItemClick}
@@ -47,7 +47,7 @@ const NavBar = () => {
         {user ? (
           <Menu.Item
             as={Link}
-            to={`log/${user.id}`}
+            to={`/log/${user.id}`}
             name='log'
             active={activeItem === 'log'}
             onClick={handleItemClick}
@@ -56,7 +56,7 @@ const NavBar = () => {
         {user ? (
           <Menu.Item
             as={Link}
-            to={`routine`}
+            to={`/routine`}
             name='routine'
             active={activeItem === 'routine'}
             onClick={handleItemClick}
@@ -66,7 +66,7 @@ const NavBar = () => {
           <Menu.Item
             name='progress'
             as={Link}
-            to='progress'
+            to='/progress'
             active={activeItem === 'Progress'}
             onClick={handleItemClick}
           />
