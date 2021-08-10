@@ -62,7 +62,7 @@ export const signupUser = async formData => {
   const { name, username, password } = formData;
   const body = JSON.stringify({name, username, password});
 
-  const res = API.post('/user/signup', body , config);
+  const res = API.post('/auth/signup', body , config);
   return res;
 };
 
@@ -70,6 +70,6 @@ export const loginUser = async formData => {
   const { username, password } = formData;
   const body = JSON.stringify({ username, password });
 
-  const res = await API.post('/user/login', body, config);
+  const res = await API.post('/auth/login', body, config);
   return res;
 };

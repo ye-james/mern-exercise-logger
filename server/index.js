@@ -5,8 +5,7 @@ const connectToDB = require('./config/db');
 const logRoutes = require('./routes/log');
 const exerciseRoute = require('./routes/exercises')
 const routineRoute = require('./routes/routine')
-const userRoute = require('./routes/user')
-const jwt = require('jsonwebtoken');
+const authRoute = require('./routes/auth')
 
 const app = express();
 
@@ -18,7 +17,7 @@ app.use(express.json());
 app.use(cors())
 
 // Routes
-app.use('/user', userRoute);
+app.use('/auth', authRoute);
 app.use('/exercises', exerciseRoute);
 app.use('/routine', routineRoute)
 app.use('/log', logRoutes);

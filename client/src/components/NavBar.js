@@ -4,13 +4,13 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Menu, Segment, Input, Button } from 'semantic-ui-react';
-import { logoutUser } from '../redux/actions/user';
+import { logoutUser } from '../redux/actions/auth';
 
 const NavBar = () => {
   const dispatch = useDispatch();
   const [activeItem, setActiveItem] = useState('home');
-  const loggedIn = useSelector(state => state.user.isAuthenticated);
-  const user = useSelector(state => state.user.user);
+  const loggedIn = useSelector(state => state.auth.isAuthenticated);
+  const user = useSelector(state => state.auth.user);
   //const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const history = useHistory();
 

@@ -45,8 +45,6 @@ exports.loginUser = async (req, res) => {
 exports.signupUser = async (req, res) => {
   const { name, username, password } = req.body;
 
-  console.log(`${name} ${username} ${password}`);
-
   try {
     // see if the user exists
     let user = await User.findOne({ username });

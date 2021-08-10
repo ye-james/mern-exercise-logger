@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Container, Grid, Form, Button, Header } from 'semantic-ui-react';
-import { signupUser } from '../redux/actions/user';
+import { signupUser } from '../redux/actions/auth';
 
 const containerStyles = {
   width: '20%',
@@ -18,7 +18,7 @@ const Signup = () => {
     password: '',
   });
 
-  const isAuthenticated = useSelector(state => state.user.isAuthenticated);
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
   if (isAuthenticated) {
       return <Redirect to="/"/>;

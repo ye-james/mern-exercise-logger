@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Container, Grid, Form, Button, Header } from 'semantic-ui-react';
-import { loginUser } from '../redux/actions/user';
+import { loginUser } from '../redux/actions/auth';
 
 const containerStyles = {
   width: '20%',
