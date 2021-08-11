@@ -6,14 +6,11 @@ import logs from './logs'
 import exercises from './exercises'
 import auth from './auth'
 
-
 const persistConfig = {
     key: 'root',
     storage,
     whitelist: ['auth']
 }
-
-
 
 const rootReducer = combineReducers({
     logs,

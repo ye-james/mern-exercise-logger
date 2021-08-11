@@ -1,43 +1,55 @@
+import {
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
+  AUTH_ERROR,
+  LOGOUT,
+} from '../actions/types';
+
 const initialState = {
-    user: null,
-    isAuthenticated: null
-}
+  user: null,
+  isAuthenticated: null,
+};
 
 const auth = (state = initialState, action) => {
-    switch(action.type) {
-        case 'LOGIN_SUCCESS': 
-            localStorage.setItem('profile', JSON.stringify({userId: action.payload.id, token: action.payload.token}))
-           
-            return {
-                ...state,
-                isAuthenticated: true,
-                user: action.payload
-            } 
-        case 'SIGNUP_SUCCESS': 
-            return {
-                ...state,
-                isAuthenticated: true,
-                user: action.payload
-            }
-        case 'AUTH_ERROR':
-            return;
-        case 'LOGIN_FAIL':
-            return;
-        case 'LOGOUT_SUCCESS':
-            localStorage.clear();
-            return { ...state,
-                user: null,
-                isAuthenticated: null
-            }
-        case 'REGISTER_FAIL':
-            return {
-                ...state,
-                user: null,
-                isAuthenticated: false
-            }
-        default: 
-            return state;
-    }
-}
+  switch (action.type) {
+    case LOGIN_SUCCESS:
+      localStorage.setItem(
+        'profile',
+        JSON.stringify({
+          userId: action.payload.id,
+          token: action.payload.token,
+        })
+      );
+
+      return {
+        ...state,
+        isAuthenticated: true,
+        user: action.payload,
+      };
+    case REGISTER_SUCCESS:
+      return {
+        ...state,
+        isAuthenticated: true,
+        user: action.payload,
+      };
+    case AUTH_ERROR:
+      return;
+    case LOGOUT:
+      localStorage.clear();
+      return { ...state, user: null, isAuthenticated: null };
+    case LOGIN_FAIL:
+    return;
+    case REGISTER_FAIL:
+      return {
+        ...state,
+        user: null,
+        isAuthenticated: false,
+      };
+    default:
+      return state;
+  }
+};
 
 export default auth;
