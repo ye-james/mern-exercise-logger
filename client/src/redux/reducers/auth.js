@@ -10,16 +10,19 @@ import {
 const initialState = {
   user: null,
   isAuthenticated: null,
+  errors: [],
 };
 
 const auth = (state = initialState, action) => {
-  switch (action.type) {
+  const { type, payload } = action;
+
+  switch (type) {
     case LOGIN_SUCCESS:
       localStorage.setItem(
         'profile',
         JSON.stringify({
-          userId: action.payload.id,
-          token: action.payload.token,
+          userId: payload.id,
+          token: payload.token,
         })
       );
 
@@ -40,12 +43,15 @@ const auth = (state = initialState, action) => {
       localStorage.clear();
       return { ...state, user: null, isAuthenticated: null };
     case LOGIN_FAIL:
-    return;
+      localStorage.clear();
+      return { ...state, user: null, isAuthenticated: null, errors: payload };
     case REGISTER_FAIL:
+      localStorage.clear();
       return {
         ...state,
         user: null,
         isAuthenticated: false,
+        errors: payload,
       };
     default:
       return state;
