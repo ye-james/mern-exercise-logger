@@ -18,6 +18,12 @@ const Signup = () => {
     password: '',
   });
 
+  const [errorState, setErrorState] = useState({
+    missingName: false,
+    missingUsername: false,
+    missingPassword: false
+  })
+
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
   if (isAuthenticated) {
@@ -25,7 +31,29 @@ const Signup = () => {
   }
   
   const handleUserSignup = () => {
-    dispatch(signupUser(formData));
+
+    if (formData.name === '' && formData.username === '' && formData.password === '') {
+      setErrorState({
+        ...errorState,
+        missingName: true,
+        missingUsername: true,
+        missingPassword: true
+      })
+    } else if (formData.username === '' && formData.password === '') {
+      setErrorState({
+        ...errorState,
+        missingUsername: true,
+        missingPassword: true
+      })
+    } else if (formData.password === '') {
+      setErrorState({
+        ...errorState,
+        missingPassword: true
+      })
+    }
+    else {
+      dispatch(signupUser(formData));
+    }
   };
 
   return (
@@ -40,24 +68,33 @@ const Signup = () => {
               <Form.Input
                 label='Full Name'
                 name='name'
-                onChange={e =>
+                onChange={e => {
                   setFormData({ ...formData, name: e.target.value })
+                  setErrorState({...errorState, missingName: false})
+                  }
                 }
+                error={errorState.missingName ? { content: 'Name is required!', pointing: 'above'} : null }
               />
               <Form.Input
                 label='Username'
                 name='username'
-                onChange={e =>
+                onChange={e => {
                   setFormData({ ...formData, username: e.target.value })
+                  setErrorState({...errorState, missingUsername: false})
                 }
+                }
+                error={errorState.missingUsername ? { content: 'Username is required!', pointing: 'above'} : null }
               />
               <Form.Input
                 label='Password'
                 name='password'
                 type='password'
-                onChange={e =>
+                onChange={e => {
                   setFormData({ ...formData, password: e.target.value })
+                  setErrorState({...errorState, missingPassword: false})
                 }
+              }
+                error={errorState.missingPassword ? { content: 'Password is required!', pointing: 'above'} : null }
               />
               <span>Already a member? </span>
               <a href='/user/login'>Login here</a>

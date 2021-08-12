@@ -31,7 +31,7 @@ const App = () => {
                 <Route path={'/log/add'} component={ExerciseForm} exact/>
                 <Route path='/explore' component={Explore}/>
                 <Route path='/login' component={Login}/>
-                <Route path='/signup' component={Signup}/>
+                <Route path='/user/signup' component={Signup}/>
                 <Route path='/routine' component={Routine}/>
             </Switch>
         </Container>
