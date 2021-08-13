@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
-import { useDispatch, Provider } from 'react-redux';
+import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
-
 import Home from './components/layout/Home';
 import NavBar from './components/layout/NavBar';
 import ExerciseLog from './components/log/ExerciseLog';
@@ -14,6 +13,7 @@ import Login from './components/auth/Login';
 import Signup from './components/auth/Signup.js';
 import ExerciseForm from './components/log/ExerciseForm';
 import Routine from './components/routine/Routine';
+import PrivateRoute from './components/routing/PrivateRoute';
 import { getUserInfo } from './redux/actions/auth';
 import store from './store';
 
@@ -25,7 +25,6 @@ const containerStyles = {
 const persistor = persistStore(store);
 
 const App = () => {
-//   const dispatch = useDispatch();
 
   useEffect(() => {
     store.dispatch(getUserInfo());
@@ -39,13 +38,13 @@ const App = () => {
           <Container style={containerStyles}>
             <Switch>
               <Route path='/' component={Home} exact />
-              <Route path='/log/:userId' component={ExerciseLog} exact />
-              <Route path={'/log/edit/:exerciseId'} component={ExerciseForm} />
-              <Route path={'/log/add'} component={ExerciseForm} exact />
               <Route path='/explore' component={Explore} />
               <Route path='/login' component={Login} />
               <Route path='/signup' component={Signup} />
-              <Route path='/routine' component={Routine} />
+              <PrivateRoute path='/routine' component={Routine} />
+              <PrivateRoute path='/log/:userId' component={ExerciseLog} exact />
+              <PrivateRoute path={'/log/edit/:exerciseId'} component={ExerciseForm} />
+              <PrivateRoute path={'/log/add'} component={ExerciseForm} exact />
             </Switch>
           </Container>
           <Footer />

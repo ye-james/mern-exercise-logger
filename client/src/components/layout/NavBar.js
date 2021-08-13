@@ -11,13 +11,7 @@ const NavBar = () => {
   const [activeItem, setActiveItem] = useState('home');
   const loggedIn = useSelector(state => state.auth.isAuthenticated);
   const user = useSelector(state => state.auth.user);
-  //const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const history = useHistory();
-
-  //console.log(user);
-  // useEffect(() => {
-  //   setUser(JSON.parse(localStorage.getItem('profile')));
-  // });
 
   const handleItemClick = ({ name }) => {
     setActiveItem(name);
@@ -47,7 +41,7 @@ const NavBar = () => {
         {user ? (
           <Menu.Item
             as={Link}
-            to={`/log/${user.id}`}
+            to={`/log/${user._id}`}
             name='log'
             active={activeItem === 'log'}
             onClick={handleItemClick}
