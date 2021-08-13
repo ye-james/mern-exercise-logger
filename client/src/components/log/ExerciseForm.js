@@ -14,7 +14,7 @@ const ExerciseForm = ({open, handleModal}) => {
     const id = useParams().exerciseId
     const [modalOpen, setModalOpen] = useState(url==='/log/add' || url===`/log/edit/${id}`);
 
-
+    const  user  = useSelector(state => state.auth.user);
     const currExercise = useSelector(state => state.logs.editExercise);
     const [exercise, setExercise] = useState('');
     const [set, setSet] = useState('');
@@ -45,7 +45,7 @@ const ExerciseForm = ({open, handleModal}) => {
         if(id) {
             dispatch(updateExercise(newExercise, id));
         } else {
-            dispatch(addExercise(newExercise))
+            dispatch(addExercise(newExercise, user._id))
 
         }
         history.push(`/log/${JSON.parse(localStorage.getItem('profile')).userId}`)

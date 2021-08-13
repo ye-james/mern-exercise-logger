@@ -9,18 +9,18 @@ import {
 import * as api from '../../api';
 //Action creators
 
-export const getLog = () => async dispatch => {
+export const getLog = (userId) => async dispatch => {
   try {
-    const result = await api.fetchLog();
+    const result = await api.fetchLog(userId);
     dispatch({ type: FETCH_LOG, payload: result.data });
   } catch (error) {
     console.log(error.message);
   }
 };
 
-export const addExercise = exercise => async dispatch => {
+export const addExercise = (exercise, userId) => async dispatch => {
   try {
-    const result = await api.addExercise(exercise);
+    const result = await api.addExercise(exercise, userId);
     console.log(result);
     dispatch({ type: ADD_EXERCISE, payload: result.data });
   } catch (err) {

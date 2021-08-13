@@ -14,14 +14,14 @@ const containerStyles = {
 const ExerciseLog = () => {  
     const dispatch = useDispatch();
     let { url } = useRouteMatch();
-
+    const  user  = useSelector(state => state.auth.user);
     const logs = useSelector(state => state.logs.logs);
     const [startDate, setStartDate] = useState(new Date());
     const [modalStatus, setModalStatus] = useState(false);
 
 
     useEffect(() => {
-        dispatch(getLog())
+        dispatch(getLog(user._id));
     }, [dispatch])
 
 
