@@ -10,20 +10,20 @@ const config = {
 
 //Create interceptor to include token with our requests if user is logged in
 API.interceptors.request.use(req => {
-  if (localStorage.getItem('profile')) {
-    req.headers.authorization = `Bearer ${
-      JSON.parse(localStorage.getItem('profile')).token
-    }`;
+  const token = localStorage.getItem('token');
+
+  if (token) {
+    req.headers.authorization = `Bearer ${token}`;
   }
   return req;
 });
 
-export const fetchLog = () =>
-  API.get(`/log/${JSON.parse(localStorage.getItem('profile')).userId}`);
+export const fetchLog = (userId) =>
+  API.get(`/log/${userId}`);
 
-export const addExercise = newExercise =>
+export const addExercise = (newExercise, userId) =>
   API.post('/log/add-exercise', {
-    userId: JSON.parse(localStorage.getItem('profile')).id,
+    userId,
     name: newExercise.exercise,
     set: newExercise.set,
     reps: newExercise.reps,
@@ -44,9 +44,9 @@ export const deleteExercise = id =>
     _id: id,
   });
 
-export const saveRoutine = routine => {
+export const saveRoutine = (routine, userId) => {
   API.post(
-    `/routine/${JSON.parse(localStorage.getItem('profile')).userId}`,
+    `/routine/${userId}`,
     {
       routine,
     },
@@ -60,9 +60,9 @@ export const getExercises = () => API.get('/exercises');
 
 export const signupUser = async formData => {
   const { name, username, password } = formData;
-  const body = JSON.stringify({name, username, password});
+  const body = JSON.stringify({ name, username, password });
 
-  const res = API.post('/auth/signup', body , config);
+  const res = API.post('/auth/signup', body, config);
   return res;
 };
 
@@ -73,3 +73,5 @@ export const loginUser = async formData => {
   const res = await API.post('/auth/login', body, config);
   return res;
 };
+
+export const getUserInfo = async () => await API.get('/auth');

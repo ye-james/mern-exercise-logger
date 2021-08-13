@@ -3,6 +3,19 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 
+exports.getUserInfo = async (req, res) => {
+  try {
+    // get all fields except for the password
+    const user = await User.findById(req.user.id).select('-password');
+
+    // return the user info
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(401).json({ msg: 'Server error' });
+  }
+};
+
 exports.loginUser = async (req, res) => {
   const { username, password } = req.body;
 
@@ -24,18 +37,23 @@ exports.loginUser = async (req, res) => {
       });
     }
 
-    // create json web token
-    const token = jwt.sign(
-      { email: user.email, id: user._id },
-      process.env.TOKEN_SECRET,
-      { expiresIn: '1hr' }
-    );
+    const payload = {
+      user: {
+        id: user.id,
+      },
+    };
 
-    res.status(200).json({
-      id: user._id,
-      name: user.name,
-      token: token,
-    });
+    // create json web token
+    jwt.sign(
+      payload,
+      process.env.TOKEN_SECRET,
+      { expiresIn: '1h' }, // options
+      (err, token) => {
+        // async callback
+        if (err) throw err;
+        res.json({ token });
+      }
+    );
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
@@ -63,9 +81,9 @@ exports.signupUser = async (req, res) => {
     user = new User({
       name,
       username,
-      password
+      password,
     });
-  
+
     // encrypt password
     const salt = await bcrypt.genSalt(10);
 
@@ -74,19 +92,23 @@ exports.signupUser = async (req, res) => {
     // save new user to db
     await user.save();
 
+    const payload = {
+      user: {
+        id: user.id,
+      },
+    };
+
     // create json web token
-    const token = jwt.sign(
-      { email: user.email, id: user._id },
+    jwt.sign(
+      payload,
       process.env.TOKEN_SECRET,
-      { expiresIn: '1hr' }
+      { expiresIn: '1hr' }, // options
+      (err, token) => {
+        // async callback
+        if (err) throw err;
+        res.json({ token });
+      }
     );
-
-    res.status(200).json({
-      id: user._id,
-      name: user.name,
-      token: token,
-    });
-
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');

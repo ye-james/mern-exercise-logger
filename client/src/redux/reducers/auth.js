@@ -5,10 +5,12 @@ import {
   REGISTER_FAIL,
   AUTH_ERROR,
   LOGOUT,
+  LOAD_USER_INFO,
 } from '../actions/types';
 
 const initialState = {
   user: null,
+  token: null,
   isAuthenticated: null,
   errors: [],
 };
@@ -18,40 +20,36 @@ const auth = (state = initialState, action) => {
 
   switch (type) {
     case LOGIN_SUCCESS:
-      localStorage.setItem(
-        'profile',
-        JSON.stringify({
-          userId: payload.id,
-          token: payload.token,
-        })
-      );
-
-      return {
-        ...state,
-        isAuthenticated: true,
-        user: action.payload,
-      };
     case REGISTER_SUCCESS:
+      localStorage.setItem('token', payload.token);
       return {
         ...state,
         isAuthenticated: true,
-        user: action.payload,
+        ...payload,
       };
+    case LOAD_USER_INFO:
+      return {...state, isAuthenticated: true, user: payload}
     case AUTH_ERROR:
-      return;
+      localStorage.removeItem('token');
+      return { ...state, isAuthenticated: false, user: null, token: null };
     case LOGOUT:
-      localStorage.clear();
-      return { ...state, user: null, isAuthenticated: null };
+      localStorage.removeItem('token');
+      return { ...state, user: null, isAuthenticated: null, token: null };
     case LOGIN_FAIL:
-      localStorage.clear();
-      return { ...state, user: null, isAuthenticated: null, errors: payload };
-    case REGISTER_FAIL:
-      localStorage.clear();
+      localStorage.removeItem('token');
       return {
-        ...state,
+        user: null,
+        isAuthenticated: null,
+        token: null,
+        errors: payload,
+      };
+    case REGISTER_FAIL:
+      localStorage.removeItem('token');
+      return {
         user: null,
         isAuthenticated: false,
         errors: payload,
+        token: null,
       };
     default:
       return state;
