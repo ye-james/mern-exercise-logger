@@ -16,11 +16,35 @@ const Login = () => {
     password: '',
   });
 
+  const [errorState, setErrorState] = useState({
+    missingUsername: false,
+    missingPassword: false
+  })
+
   const dispatch = useDispatch();
   const history = useHistory();
 
   const handleUserLogin = () => {
-    dispatch(loginUser(formData, history));
+    if (formData.username === '' && formData.password === '') {
+      setErrorState({
+        ...errorState,
+        missingUsername: true,
+        missingPassword: true
+      })
+    } else if (formData.username === '') {
+      setErrorState({
+        ...errorState,
+        missingUsername: true
+      })
+    } else if (formData.password === '') {
+      setErrorState({
+        ...errorState,
+        missingPassword: true
+      })
+    }
+    else {
+      dispatch(loginUser(formData, history));
+    }
   };
 
   return (
@@ -35,16 +59,22 @@ const Login = () => {
               <Form.Input
                 label='Username'
                 name='username'
-                onChange={e =>
+                onChange={e => {
                   setFormData({ ...formData, username: e.target.value })
+                  setErrorState({...errorState, missingUsername: false})
                 }
+              }
+                error={errorState.missingUsername ?  {content:'Username is required!', pointing: 'above' } : null}
               />
               <Form.Input
                 label='Password'
                 type='password'
-                onChange={e =>
+                onChange={e => {
                   setFormData({ ...formData, password: e.target.value })
+                  setErrorState({...errorState, missingPassword: false})
+                 }
                 }
+                error={errorState.missingPassword ?  {content:'Password is required!', pointing: 'above' } : null}
               />
               <span>Not a member? </span>
               <a href='/user/signup'>Sign up here</a>

@@ -12,6 +12,7 @@ const persistConfig = {
     whitelist: ['auth']
 }
 
+
 const rootReducer = combineReducers({
     logs,
     exercises,
