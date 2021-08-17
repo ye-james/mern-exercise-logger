@@ -67,9 +67,6 @@ const NavBar = () => {
         ) : null}
 
         <Menu.Menu position='right'>
-          <Menu.Item>
-            <Input icon='search' placeholder='Search...' />
-          </Menu.Item>
           {loggedIn && user ? (
             <Menu.Item name={`Welcome ${user.name.split(' ')[0]}`} />
           ) : (
