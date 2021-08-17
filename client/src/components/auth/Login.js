@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { Container, Grid, Form, Button, Header } from 'semantic-ui-react';
+import {
+  Container,
+  Grid,
+  Form,
+  Button,
+  Header,
+  Segment,
+  Message,
+} from 'semantic-ui-react';
 import { loginUser } from '../../redux/actions/auth';
 
 const containerStyles = {
-  width: '20%',
+  width: '50%',
   height: '80vh',
   paddingTop: '1em',
 };
@@ -18,8 +26,8 @@ const Login = () => {
 
   const [errorState, setErrorState] = useState({
     missingUsername: false,
-    missingPassword: false
-  })
+    missingPassword: false,
+  });
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -29,59 +37,65 @@ const Login = () => {
       setErrorState({
         ...errorState,
         missingUsername: true,
-        missingPassword: true
-      })
+        missingPassword: true,
+      });
     } else if (formData.username === '') {
       setErrorState({
         ...errorState,
-        missingUsername: true
-      })
+        missingUsername: true,
+      });
     } else if (formData.password === '') {
       setErrorState({
         ...errorState,
-        missingPassword: true
-      })
-    }
-    else {
+        missingPassword: true,
+      });
+    } else {
       dispatch(loginUser(formData, history));
     }
   };
 
   return (
     <Container style={containerStyles}>
-      <Grid>
-        <Grid.Row>
-          <Header as='h1'>Login to see your current progress</Header>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column centered="true" columns={16}>
-            <Form onSubmit={handleUserLogin}>
+      <Grid textAlign='left' verticalAlign='middle' style={{ height: '60vh' }}>
+        <Grid.Column style={{ maxWidth: 500 }}>
+          <Header as='h2' textAlign='center'>
+            Login
+          </Header>
+          <Form size='large' onSubmit={handleUserLogin}>
+            <Segment>
               <Form.Input
                 label='Username'
                 name='username'
                 onChange={e => {
-                  setFormData({ ...formData, username: e.target.value })
-                  setErrorState({...errorState, missingUsername: false})
+                  setFormData({ ...formData, username: e.target.value });
+                  setErrorState({ ...errorState, missingUsername: false });
+                }}
+                error={
+                  errorState.missingUsername
+                    ? { content: 'Username is required!', pointing: 'above' }
+                    : null
                 }
-              }
-                error={errorState.missingUsername ?  {content:'Username is required!', pointing: 'above' } : null}
               />
               <Form.Input
                 label='Password'
                 type='password'
                 onChange={e => {
-                  setFormData({ ...formData, password: e.target.value })
-                  setErrorState({...errorState, missingPassword: false})
-                 }
+                  setFormData({ ...formData, password: e.target.value });
+                  setErrorState({ ...errorState, missingPassword: false });
+                }}
+                error={
+                  errorState.missingPassword
+                    ? { content: 'Password is required!', pointing: 'above' }
+                    : null
                 }
-                error={errorState.missingPassword ?  {content:'Password is required!', pointing: 'above' } : null}
               />
-              <span>Not a member? </span>
-              <a href='/user/signup'>Sign up here</a>
-              <Form.Input type='submit' control={Button} content='Login' />
-            </Form>
-          </Grid.Column>
-        </Grid.Row>
+              <Button>Login</Button>
+            </Segment>
+          </Form>
+          <Message>
+            Not a member? <Link to='/signup'>Sign up here</Link>
+          </Message>
+        </Grid.Column>
       </Grid>
     </Container>
   );

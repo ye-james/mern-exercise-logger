@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import { Container, Grid, Form, Button, Header } from 'semantic-ui-react';
+import { Redirect, Link } from 'react-router-dom';
+import {
+  Container,
+  Grid,
+  Form,
+  Button,
+  Header,
+  Segment,
+  Message,
+} from 'semantic-ui-react';
 import { signupUser } from '../../redux/actions/auth';
 
 const containerStyles = {
-  width: '20%',
+  width: '50%',
   height: '80vh',
   paddingTop: '1em',
 };
@@ -21,87 +29,99 @@ const Signup = () => {
   const [errorState, setErrorState] = useState({
     missingName: false,
     missingUsername: false,
-    missingPassword: false
-  })
+    missingPassword: false,
+  });
 
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
   if (isAuthenticated) {
-      return <Redirect to="/"/>;
+    return <Redirect to='/' />;
   }
-  
-  const handleUserSignup = () => {
 
-    if (formData.name === '' && formData.username === '' && formData.password === '') {
+  const handleUserSignup = () => {
+    if (
+      formData.name === '' &&
+      formData.username === '' &&
+      formData.password === ''
+    ) {
       setErrorState({
         ...errorState,
         missingName: true,
         missingUsername: true,
-        missingPassword: true
-      })
+        missingPassword: true,
+      });
     } else if (formData.username === '' && formData.password === '') {
       setErrorState({
         ...errorState,
         missingUsername: true,
-        missingPassword: true
-      })
+        missingPassword: true,
+      });
     } else if (formData.password === '') {
       setErrorState({
         ...errorState,
-        missingPassword: true
-      })
-    }
-    else {
+        missingPassword: true,
+      });
+    } else {
       dispatch(signupUser(formData));
     }
   };
 
   return (
     <Container style={containerStyles}>
-      <Grid>
-        <Grid.Row>
-          <Header as='h1'>Sign up to log your progress</Header>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column centered="true" columns={16}>
-            <Form onSubmit={handleUserSignup}>
+      <Grid textAlign='left' verticalAlign='middle' style={{ height: '60vh' }}>
+        <Grid.Column style={{ maxWidth: 500 }}>
+          <Header as='h2' textAlign='center'>
+            Signup
+          </Header>
+          <Form size='large' onSubmit={handleUserSignup}>
+            <Segment>
               <Form.Input
                 label='Full Name'
                 name='name'
                 onChange={e => {
-                  setFormData({ ...formData, name: e.target.value })
-                  setErrorState({...errorState, missingName: false})
-                  }
+                  setFormData({ ...formData, name: e.target.value });
+                  setErrorState({ ...errorState, missingName: false });
+                }}
+                error={
+                  errorState.missingName
+                    ? { content: 'Name is required!', pointing: 'above' }
+                    : null
                 }
-                error={errorState.missingName ? { content: 'Name is required!', pointing: 'above'} : null }
               />
               <Form.Input
                 label='Username'
                 name='username'
                 onChange={e => {
-                  setFormData({ ...formData, username: e.target.value })
-                  setErrorState({...errorState, missingUsername: false})
+                  setFormData({ ...formData, username: e.target.value });
+                  setErrorState({ ...errorState, missingUsername: false });
+                }}
+                error={
+                  errorState.missingUsername
+                    ? { content: 'Username is required!', pointing: 'above' }
+                    : null
                 }
-                }
-                error={errorState.missingUsername ? { content: 'Username is required!', pointing: 'above'} : null }
               />
               <Form.Input
                 label='Password'
                 name='password'
                 type='password'
                 onChange={e => {
-                  setFormData({ ...formData, password: e.target.value })
-                  setErrorState({...errorState, missingPassword: false})
+                  setFormData({ ...formData, password: e.target.value });
+                  setErrorState({ ...errorState, missingPassword: false });
+                }}
+                error={
+                  errorState.missingPassword
+                    ? { content: 'Password is required!', pointing: 'above' }
+                    : null
                 }
-              }
-                error={errorState.missingPassword ? { content: 'Password is required!', pointing: 'above'} : null }
               />
-              <span>Already a member? </span>
-              <a href='/user/login'>Login here</a>
-              <Form.Input type='submit' control={Button} content='Sign Up' />
-            </Form>
-          </Grid.Column>
-        </Grid.Row>
+              <Button>Signup</Button>
+            </Segment>
+          </Form>
+          <Message>
+            Already a member? <Link to='/login'>Login here</Link>
+          </Message>
+        </Grid.Column>
       </Grid>
     </Container>
   );
